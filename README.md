@@ -173,7 +173,7 @@ Some apps that are similar in the market -
 |Iteration | Application Requirements (Eseential/Desirable/Optional) | Android Components and Features| member 1 contribution/tasks| member 2 contribution/tasks|
 |---|---|---|---|---|
 |0|<p>Listed app overview and potential features </p><p>Functions are listed and defined requirements</p> |None |<p>Communicate and discuss to determine the topic, write iteration 0, and summarize</p> |<p>Communicate and discuss to determine the topic, write iteration 0, and summarize</p> |
-|1| <p>Complete the essential part of the function, including user login, scan code to share the link, share location</p>|<p>Alibaba Cloud Short Message Service</p> | | |
+|1| <p>Complete the essential part of the function, including user login, scan code to share the link, share location</p>| | | |
 |2| | | | |
 
 

@@ -68,7 +68,7 @@ Some apps that are similar in the market -
 
 
 
-|*Title*|*Login or signup user account or enter as a guest (Essential)*|
+|*Title*|*Login or signup user account or enter as a guest (essential)*|
 | --- | --- |
 |*Description*|*Users are able to login as a guest or registered member*|
 |*Mockups*||
@@ -81,7 +81,18 @@ Some apps that are similar in the market -
 
 
 
-|*Title*|*Location sharing (essentials)*|
+
+|*Title*|*Invitation with QR codes or links (essential)*|
+| --- | --- |
+|*Description*|*Each user can generate exclusive account code to invite or be invited into a limited range map*|
+|*Mockups*||
+|*Acceptance tests*||
+|*Test Results*||
+|*Status*||
+
+
+
+|*Title*|*Location sharing (essential)*|
 | --- | --- |
 |*Description*|*By initiating location sharing, you can see where you and your friends are on the map*|
 |*Mockups*||
@@ -108,7 +119,13 @@ Some apps that are similar in the market -
 |*Status*||
 
 
-
+|*Title*|*Hover user location spot on map to show friend’s user profile and information (desirable)*|
+| --- | --- |
+|*Description*|*When user hover other user’s point on map, it should pop-up user profile information and provide functions with buttons*|
+|*Mockups*||
+|*Acceptance tests*||
+|*Test Results*||
+|*Status*||
 
 
 |*Title*|*Tracking user history route (optional)*|
@@ -122,24 +139,6 @@ Some apps that are similar in the market -
 
 
 
-|<p>*Title*</p><p></p>|*Invitation with QR codes or links (Essential)*|
-| --- | --- |
-|*Description*|*Each user can generate exclusive account code to invite or be invited into a limited range map*|
-|*Mockups*||
-|*Acceptance tests*||
-|*Test Results*||
-|*Status*||
-
-
-
-
-|<p>*Title*</p><p>*(desirable)*</p>|*Hover user location spot on map to show friend’s user profile and information*|
-| --- | --- |
-|*Description*|*When user hover other user’s point on map, it should pop-up user profile information and provide functions with buttons*|
-|*Mockups*||
-|*Acceptance tests*||
-|*Test Results*||
-|*Status*||
 
 *In Iteration 0 (project planning phase), this section should contain most essential features, some desirable features and possibly a few optional features if you want. Each feature listed in this section should have a title and a brief description, preferably using the user story template “As (a role)… I want (some feature), so that (value)...” . Each essential feature should also have at least one acceptance test, and one or multiple mockups if applicable.*
 
@@ -173,8 +172,8 @@ Some apps that are similar in the market -
 
 |Iteration | Application Requirements (Eseential/Desirable/Optional) | Android Components and Features| member 1 contribution/tasks| member 2 contribution/tasks|
 |---|---|---|---|---|
-|0|<p>Listed app overview and potential features </p><p>Functions are listed and defined requirements</p> |None | | |
-|1| | | | |
+|0|<p>Listed app overview and potential features </p><p>Functions are listed and defined requirements</p> |None |<p>Communicate and discuss to determine the topic, write iteration 0, and summarize</p> |<p>Communicate and discuss to determine the topic, write iteration 0, and summarize</p> |
+|1| <p>Complete the essential part of the function, including user login, scan code to share the link, share location</p>|<p>Alibaba Cloud Short Message Service</p> | | |
 |2| | | | |
 
 

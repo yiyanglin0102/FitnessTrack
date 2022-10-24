@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_exercise_class">
+        <item>swim</item>
+        <item>run</item>
+        <item>Weightlifting</item>
+        <item>Yoga</item>
+    </string-array>
+
+
+
+
+</resources>

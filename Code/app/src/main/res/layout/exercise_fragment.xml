@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_exercise">
+
+
+    <Spinner
+        android:layout_width="160dp"
+        android:layout_height="148dp"
+        android:autofillHints="Exercise Type"
+        android:entries="@array/spinner_exercise_class"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="7dp" />
+
+    <TextView
+        android:id="@+id/exercise_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Choose your type of exercise"
+        android:textSize="10sp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="21dp"
+        tools:layout_editor_absoluteY="34dp" />
+
+    <TextView
+        android:id="@+id/exercise_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Input your exercise time"
+        android:textSize="10sp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="24dp"
+        tools:layout_editor_absoluteY="116dp" />
+
+    <EditText
+        android:layout_width="71dp"
+        android:layout_height="26dp"
+        android:background="@drawable/edit_text_bg"
+        android:hint="time"
+        android:paddingLeft="10sp"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@id/exercise_time"
+        app:layout_constraintEnd_toEndOf="@id/exercise_time"
+        app:layout_constraintHorizontal_bias="0.266"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/_dynamic"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="UnknownId" />
+
+    <Button
+        android:id="@+id/exercise_calculate"
+        android:layout_width="95dp"
+        android:layout_height="35dp"
+        android:text="Calculate"
+        android:textSize="8sp"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="216dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

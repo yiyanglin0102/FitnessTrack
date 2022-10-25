@@ -1,1 +1,1 @@
-![Proposal](./CS683 Proposal.pdf)
+[Proposal](./CS683 Proposal.pdf)

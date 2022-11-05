@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.FitnessTrack">
+    package="com.fitnesstrack">
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name="com.fitnesstrack.FirstActivity"
+            android:name=".FirstActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -20,20 +20,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.fitnesstrack.IntroActivity"
+            android:name=".IntroActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
-
-        <!--TODO (Step 2: Modify the activity tag as per requirement)-->
-        <!--START-->
-        <activity android:name="com.fitnesstrack.SignUpActivity"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- TODO (Step 2: Modify the activity tag as per requirement) -->
+        <!-- START -->
+        <activity
+            android:name=".SignUpActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <!--END-->
-
-        <activity android:name="com.fitnesstrack.MainActivity" />
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- END -->
+        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".SignInActivity"
+            android:screenOrientation="portrait"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
     </application>
 
 </manifest>

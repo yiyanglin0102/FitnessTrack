@@ -1,5 +1,6 @@
 package com.fitnesstrack.firebase
 
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import androidx.core.content.ContextCompat.startActivity
@@ -30,19 +31,35 @@ class Firestore {
         return FirebaseAuth.getInstance().currentUser!!.uid
     }
 
-
-    fun signInUser(activity: SignInActivity) {
+    fun signInUser(activity: Activity) {
         mFirestore.collection("Users").document(getCurrentUserId())
             .get()
             .addOnSuccessListener { document ->
 
-                val loggedInUser = document.toObject(User::class.java)
-                if (loggedInUser != null) {
-                    activity.signInSuccess(loggedInUser)
+                val loggedInUser = document.toObject(User::class.java)!!
+                when (activity) {
+                    is SignInActivity -> {
+                        activity.signInSuccess(loggedInUser)
+                    }
+                    is MainActivity -> {
+                        activity.updateNavigationUserDetails(loggedInUser)
+                    }
                 }
 
             }.addOnFailureListener { e ->
-                Log.e(activity.javaClass.simpleName, "Error")
+                when (activity) {
+                    is SignInActivity -> {
+//                        activity.hideProgressDialog()
+                    }
+                    is MainActivity -> {
+//                        activity.hideProgressDialog()
+                    }
+                }
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while getting loggedIn user details",
+                    e
+                )
             }
     }
 }

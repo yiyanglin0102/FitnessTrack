@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.Toast
 import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
 import com.fitnesstrack.firebase.Firestore
@@ -24,7 +23,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setupActionBar()
         nav_view.setNavigationItemSelectedListener(this)
 
-        Firestore().signInUser(this)
+        Firestore().loadUserData(this)
     }
 
     private fun setupActionBar() {

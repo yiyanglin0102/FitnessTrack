@@ -1,10 +1,9 @@
 package com.fitnesstrack.firebase
 
 import android.app.Activity
-import android.content.Intent
 import android.util.Log
-import androidx.core.content.ContextCompat.startActivity
 import com.fitnesstrack.MainActivity
+import com.fitnesstrack.MyProfileActivity
 import com.fitnesstrack.firebase.models.User
 import com.fitnesstrack.SignInActivity
 import com.fitnesstrack.SignUpActivity
@@ -31,7 +30,7 @@ class Firestore {
         return FirebaseAuth.getInstance().currentUser!!.uid
     }
 
-    fun signInUser(activity: Activity) {
+    fun loadUserData(activity: Activity) {
         mFirestore.collection("Users").document(getCurrentUserId())
             .get()
             .addOnSuccessListener { document ->
@@ -43,6 +42,9 @@ class Firestore {
                     }
                     is MainActivity -> {
                         activity.updateNavigationUserDetails(loggedInUser)
+                    }
+                    is MyProfileActivity -> {
+                        activity.setUserDataUI(loggedInUser)
                     }
                 }
 

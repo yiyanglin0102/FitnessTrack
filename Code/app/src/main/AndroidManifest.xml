@@ -24,21 +24,21 @@
         <activity
             android:name=".IntroActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- TODO (Step 2: Modify the activity tag as per requirement) -->
-        <!-- START -->
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".SignUpActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- END -->
-        <activity android:name=".MainActivity" />
-        <activity
-            android:name=".SignInActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name=".SignInActivity"
             android:screenOrientation="portrait"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

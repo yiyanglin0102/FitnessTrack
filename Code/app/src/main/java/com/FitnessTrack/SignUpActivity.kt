@@ -1,7 +1,7 @@
 package com.fitnesstrack
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,11 +21,9 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
         auth = Firebase.auth
 
-
-        btn_sign_up.setOnClickListener{
+        btn_sign_up.setOnClickListener {
             registerUser()
         }
-
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -43,21 +41,18 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun createAccount(email: String, name: String, password: String) {
-        // [START create_user_with_email]
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Firebase registered user
                     val firebaseUser: FirebaseUser = task.result!!.user!!
-                    // Registered Email
                     val registeredEmail = firebaseUser.email!!
-
                     val user = User(
                         firebaseUser.uid, name, registeredEmail
                     )
 
                     // call the registerUser function of FirestoreClass to make an entry in the database.
                     Firestore().registerUser(this@SignUpActivity, user)
+                    updateUI(firebaseUser)
                 } else {
                     Toast.makeText(
                         this@SignUpActivity,
@@ -66,28 +61,26 @@ class SignUpActivity : AppCompatActivity() {
 
                 }
             }
-        // [END create_user_with_email]
     }
-    fun userRegisteredSuccess()
-    {
+
+    fun userRegisteredSuccess() {
         Toast.makeText(
             this@SignUpActivity,
-           "you have successfully registered", Toast.LENGTH_LONG
+            "you have successfully registered", Toast.LENGTH_LONG
         ).show()
 
-
     }
-    private fun registerUser()
-    {
-        val name: String  = et_name.text.toString().trim {it <= ' '}
-        val email: String  = et_email.text.toString().trim {it <= ' '}
-        val password: String  = et_password.text.toString().trim {it <= ' '}
-        createAccount(email,name, password)
+
+    private fun registerUser() {
+        val name: String = et_name.text.toString().trim { it <= ' ' }
+        val email: String = et_email.text.toString().trim { it <= ' ' }
+        val password: String = et_password.text.toString().trim { it <= ' ' }
+        createAccount(email, name, password)
     }
 
 
     private fun updateUI(user: FirebaseUser?) {
-
+        startActivity(Intent(this, MainActivity::class.java))
     }
 
     private fun reload() {

@@ -28,4 +28,5 @@ class FirstActivity : AppCompatActivity() {
             finish()
         }, 2500)
     }
+
 }

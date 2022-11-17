@@ -37,17 +37,12 @@ class Firestore {
             .addOnSuccessListener { document ->
 
                 val loggedInUser = document.toObject(User::class.java)
-                if (loggedInUser != null)
-                {
+                if (loggedInUser != null) {
                     activity.signInSuccess(loggedInUser)
                 }
 
-            }.addOnFailureListener {
-                e -> Log.e(activity.javaClass.simpleName, "Error")
+            }.addOnFailureListener { e ->
+                Log.e(activity.javaClass.simpleName, "Error")
             }
-
-
     }
-
-
 }

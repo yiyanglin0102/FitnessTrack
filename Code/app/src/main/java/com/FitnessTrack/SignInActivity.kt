@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.fitnesstrack.firebase.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -47,7 +46,7 @@ class SignInActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Log.d(SignUpActivity.TAG, "signInWithEmail:success")
                     val user = auth.currentUser
-                    updateUI(user)
+                    startActivity(Intent(this, MainActivity::class.java))
                 } else {
                     Log.w(SignUpActivity.TAG, "signhInWithEmail:failure", task.exception)
                     Toast.makeText(
@@ -74,7 +73,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun updateUI(user: FirebaseUser?) {
-        startActivity(Intent(this, MainActivity::class.java))
+
     }
 
 }

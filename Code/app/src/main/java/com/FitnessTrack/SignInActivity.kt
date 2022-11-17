@@ -6,6 +6,8 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import com.fitnesstrack.firebase.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -21,13 +23,9 @@ class SignInActivity : AppCompatActivity() {
         auth = Firebase.auth
         setContentView(R.layout.activity_sign_in)
 
-
-        btn_sign_in.setOnClickListener{
-//            signInWithEmail("t@t.com", "123456")
+        btn_sign_in.setOnClickListener {
             signInRegisteredUser()
         }
-
-
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -37,39 +35,39 @@ class SignInActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
-        if(currentUser != null){
+        if (currentUser != null) {
             reload();
         }
     }
 
     private fun signInWithEmail(email: String, password: String) {
-        // [START create_user_with_email]
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d(SignUpActivity.TAG, "signInWithEmail:success")
                     val user = auth.currentUser
                     updateUI(user)
                 } else {
-                    // If sign in fails, display a message to the user.
                     Log.w(SignUpActivity.TAG, "signhInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
-        // [END create_user_with_email]
     }
 
-    private fun signInRegisteredUser()
-    {
-        val email: String  = et_email_signin.text.toString().trim {it <= ' '}
-        val password: String  = et_password_signin.text.toString().trim {it <= ' '}
+    private fun signInRegisteredUser() {
+        val email: String = et_email_signin.text.toString().trim { it <= ' ' }
+        val password: String = et_password_signin.text.toString().trim { it <= ' ' }
         signInWithEmail(email, password)
     }
 
+    fun signInSuccess(user: User) {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
+    }
 
     private fun reload() {
 

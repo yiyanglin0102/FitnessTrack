@@ -23,7 +23,7 @@ class SignInActivity : AppCompatActivity() {
 
 
         btn_sign_in.setOnClickListener{
-//            signInWithEmail("111111111@yyy.com", "aaaa123aa")
+//            signInWithEmail("t@t.com", "123456")
             signInRegisteredUser()
         }
 
@@ -58,7 +58,6 @@ class SignInActivity : AppCompatActivity() {
                     Log.w(SignUpActivity.TAG, "signhInWithEmail:failure", task.exception)
                     Toast.makeText(baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
-                    updateUI(null)
                 }
             }
         // [END create_user_with_email]

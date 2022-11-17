@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.fitnesstrack.firebase.Firestore
+import com.fitnesstrack.firebase.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -18,7 +20,13 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
         auth = Firebase.auth
-        createAccount("111111111@yyy.com", "aaaa123aa")
+
+
+        btn_sign_up.setOnClickListener{
+            registerUser()
+        }
+
+
         window.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
             WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -34,34 +42,47 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun createAccount(email: String, password: String) {
+    private fun createAccount(email: String, name: String, password: String) {
         // [START create_user_with_email]
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success")
-                    val user = auth.currentUser
-                    updateUI(user)
+                    // Firebase registered user
+                    val firebaseUser: FirebaseUser = task.result!!.user!!
+                    // Registered Email
+                    val registeredEmail = firebaseUser.email!!
+
+                    val user = User(
+                        firebaseUser.uid, name, registeredEmail
+                    )
+
+                    // call the registerUser function of FirestoreClass to make an entry in the database.
+                    Firestore().registerUser(this@SignUpActivity, user)
                 } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
                     Toast.makeText(
-                        baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT
+                        this@SignUpActivity,
+                        "Registration Failed", Toast.LENGTH_SHORT
                     ).show()
-                    updateUI(null)
+
                 }
             }
         // [END create_user_with_email]
     }
+    fun userRegisteredSuccess()
+    {
+        Toast.makeText(
+            this@SignUpActivity,
+           "you have successfully registered", Toast.LENGTH_LONG
+        ).show()
 
+
+    }
     private fun registerUser()
     {
         val name: String  = et_name.text.toString().trim {it <= ' '}
         val email: String  = et_email.text.toString().trim {it <= ' '}
         val password: String  = et_password.text.toString().trim {it <= ' '}
-
+        createAccount(email,name, password)
     }
 
 

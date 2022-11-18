@@ -33,7 +33,6 @@ class SignUpActivity : AppCompatActivity() {
 
     public override fun onStart() {
         super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
             reload();
@@ -50,7 +49,6 @@ class SignUpActivity : AppCompatActivity() {
                         firebaseUser.uid, name, registeredEmail
                     )
 
-                    // call the registerUser function of FirestoreClass to make an entry in the database.
                     Firestore().registerUser(this@SignUpActivity, user)
                     updateUI(firebaseUser)
                 } else {

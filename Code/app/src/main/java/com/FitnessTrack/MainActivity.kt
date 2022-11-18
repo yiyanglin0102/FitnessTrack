@@ -66,10 +66,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     fun updateNavigationUserDetails(user: User) {
         Glide
             .with(this@MainActivity)
-            .load(user.image) // URL of the image
-            .centerCrop() // Scale type of the image.
-            .placeholder(R.drawable.ic_user_place_holder) // A default place holder
-            .into(nav_user_image) // the view in which the image will be loaded.
+            .load(user.image)
+            .centerCrop()
+            .placeholder(R.drawable.ic_user_place_holder)
+            .into(nav_user_image)
 
         tv_username.text = user.name
     }

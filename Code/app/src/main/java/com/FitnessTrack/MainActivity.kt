@@ -54,6 +54,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this, GoalActivity::class.java))
             }
 
+            R.id.nav_meal -> {
+                startActivity(Intent(this, MealActivity::class.java))
+            }
+
             R.id.nav_sign_out -> {
                 FirebaseAuth.getInstance().signOut()
 

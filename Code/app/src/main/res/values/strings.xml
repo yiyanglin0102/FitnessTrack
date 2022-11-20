@@ -12,6 +12,7 @@
     <string name="email">Email</string>
     <string name="sign_in_description_text">Enter your name, email id and password, to register with us.</string>
     <string name="nav_my_profile">My Profile</string>
+    <string name="nav_meal">My Meal</string>
     <string name="nav_goal">My Goal</string>
     <string name="nav_sign_out">Sign Out</string>
 
@@ -19,6 +20,7 @@
     <string name="update">UPDATE</string>
     <string name="my_profile_title">My Profile</string>
     <string name="goal_title">My Goal</string>
+    <string name="meal_title">My Meal</string>
 
 
 </resources>

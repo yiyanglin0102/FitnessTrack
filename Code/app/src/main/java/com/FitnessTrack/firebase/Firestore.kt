@@ -29,6 +29,31 @@ class Firestore {
         return FirebaseAuth.getInstance().currentUser!!.uid
     }
 
+    fun updateUserMealData(activity: MealActivity, userHashMap: HashMap<String, Any>) {
+        mFirestore.collection(Constants.USERS) // Collection Name
+            .document(getCurrentUserID()) // Document ID
+            .update(userHashMap) // A hashmap of fields which are to be updated.
+            .addOnSuccessListener {
+                // Profile data is updated successfully.
+                Log.e(activity.javaClass.simpleName, "Meal Data updated successfully!")
+
+                Toast.makeText(activity, "Meal updated successfully!", Toast.LENGTH_SHORT).show()
+
+                // Notify the success result.
+                activity.mealUpdateSuccess()
+            }
+            .addOnFailureListener { e ->
+//                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while creating a board.",
+                    e
+                )
+                Toast.makeText(activity, "Error update Meal!", Toast.LENGTH_SHORT).show()
+
+            }
+    }
+
     fun updateUserGoalData(activity: GoalActivity, userHashMap: HashMap<String, Any>) {
         mFirestore.collection(Constants.USERS) // Collection Name
             .document(getCurrentUserID()) // Document ID
@@ -97,6 +122,9 @@ class Firestore {
                         activity.setUserDataUI(loggedInUser)
                     }
                     is GoalActivity -> {
+                        activity.setUserDataUI(loggedInUser)
+                    }
+                    is MealActivity -> {
                         activity.setUserDataUI(loggedInUser)
                     }
                 }

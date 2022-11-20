@@ -3,11 +3,8 @@ package com.fitnesstrack.firebase
 import android.app.Activity
 import android.util.Log
 import android.widget.Toast
-import com.fitnesstrack.MainActivity
-import com.fitnesstrack.MyProfileActivity
+import com.fitnesstrack.*
 import com.fitnesstrack.firebase.models.User
-import com.fitnesstrack.SignInActivity
-import com.fitnesstrack.SignUpActivity
 import com.fitnesstrack.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -31,6 +28,32 @@ class Firestore {
     fun getCurrentUserID(): String {
         return FirebaseAuth.getInstance().currentUser!!.uid
     }
+
+    fun updateUserGoalData(activity: GoalActivity, userHashMap: HashMap<String, Any>) {
+        mFirestore.collection(Constants.USERS) // Collection Name
+            .document(getCurrentUserID()) // Document ID
+            .update(userHashMap) // A hashmap of fields which are to be updated.
+            .addOnSuccessListener {
+                // Profile data is updated successfully.
+                Log.e(activity.javaClass.simpleName, "Goal Data updated successfully!")
+
+                Toast.makeText(activity, "Goal updated successfully!", Toast.LENGTH_SHORT).show()
+
+                // Notify the success result.
+                activity.goalUpdateSuccess()
+            }
+            .addOnFailureListener { e ->
+//                activity.hideProgressDialog()
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while creating a board.",
+                    e
+                )
+                Toast.makeText(activity, "Error update goal!", Toast.LENGTH_SHORT).show()
+
+            }
+    }
+
 
     fun updateUserProfileData(activity: MyProfileActivity, userHashMap: HashMap<String, Any>) {
         mFirestore.collection(Constants.USERS) // Collection Name
@@ -73,6 +96,9 @@ class Firestore {
                     is MyProfileActivity -> {
                         activity.setUserDataUI(loggedInUser)
                     }
+                    is GoalActivity -> {
+                        activity.setUserDataUI(loggedInUser)
+                    }
                 }
 
             }.addOnFailureListener { e ->
@@ -83,6 +109,7 @@ class Firestore {
                     is MainActivity -> {
 //                        activity.hideProgressDialog()
                     }
+
                 }
                 Log.e(
                     activity.javaClass.simpleName,

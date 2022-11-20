@@ -24,6 +24,14 @@
                 android:value="" />
         </activity>
         <activity
+            android:name=".GoalActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".FirstActivity"
             android:exported="true"
             android:screenOrientation="portrait"

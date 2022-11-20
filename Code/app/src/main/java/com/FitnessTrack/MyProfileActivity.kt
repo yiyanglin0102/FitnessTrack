@@ -8,6 +8,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
+import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
@@ -15,6 +17,9 @@ import com.fitnesstrack.firebase.Firestore
 import com.fitnesstrack.firebase.models.User
 import kotlinx.android.synthetic.main.activity_my_profile.*
 import androidx.core.content.ContextCompat
+import com.fitnesstrack.utils.Constants
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import java.io.IOException
 
 class MyProfileActivity : AppCompatActivity() {
@@ -25,7 +30,8 @@ class MyProfileActivity : AppCompatActivity() {
     }
 
     private var mSelectedImageFileUri: Uri? = null
-
+    private var mProfileImageURL: String = ""
+    private lateinit var mUserDetails: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +52,16 @@ class MyProfileActivity : AppCompatActivity() {
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                     READ_STORAGE_PERMISSION_CODE
                 )
+            }
+        }
+
+        btn_update.setOnClickListener {
+            if (mSelectedImageFileUri != null) {
+                uploadUserImage()
+            }
+            else
+            {
+                updateUserProfileData()
             }
         }
     }
@@ -113,6 +129,10 @@ class MyProfileActivity : AppCompatActivity() {
     }
 
     fun setUserDataUI(user: User) {
+
+        mUserDetails = user
+
+
         Glide
             .with(this@MyProfileActivity)
             .load(user.image)
@@ -125,6 +145,76 @@ class MyProfileActivity : AppCompatActivity() {
         if (user.mobile != 0L) {
             et_mobile.setText(user.mobile.toString())
         }
+    }
 
+    private fun updateUserProfileData() {
+
+        val userHashMap = HashMap<String, Any>()
+
+        if (mProfileImageURL.isNotEmpty() && mProfileImageURL != mUserDetails.image) {
+            userHashMap[Constants.IMAGE] = mProfileImageURL
+        }
+
+        if (et_name.text.toString() != mUserDetails.name) {
+            userHashMap[Constants.NAME] = et_name.text.toString()
+        }
+
+        if (et_mobile.text.toString() != mUserDetails.mobile.toString()) {
+            userHashMap[Constants.MOBILE] = et_mobile.text.toString().toLong()
+        }
+
+        // Update the data in the database.
+        Firestore().updateUserProfileData(this@MyProfileActivity, userHashMap)
+    }
+
+    private fun uploadUserImage() {
+
+        if (mSelectedImageFileUri != null) {
+
+            //getting the storage reference
+            val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
+                "USER_IMAGE" + System.currentTimeMillis() + "." + getFileExtension(
+                    mSelectedImageFileUri
+                )
+            )
+
+            //adding the file to reference
+            sRef.putFile(mSelectedImageFileUri!!)
+                .addOnSuccessListener { taskSnapshot ->
+                    // The image upload is success
+                    Log.e(
+                        "Firebase Image URL",
+                        taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
+                    )
+
+                    // Get the downloadable url from the task snapshot
+                    taskSnapshot.metadata!!.reference!!.downloadUrl
+                        .addOnSuccessListener { uri ->
+                            Log.i("Downloadable Image URL", uri.toString())
+                            mProfileImageURL = uri.toString()
+                            updateUserProfileData()
+                        }
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(
+                        this@MyProfileActivity,
+                        exception.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                }
+        }
+    }
+
+
+    private fun getFileExtension(uri: Uri?): String? {
+
+        return MimeTypeMap.getSingleton()
+            .getExtensionFromMimeType(contentResolver.getType(uri!!))
+    }
+
+    fun profileUpdateSuccess()
+    {
+        finish()
     }
 }

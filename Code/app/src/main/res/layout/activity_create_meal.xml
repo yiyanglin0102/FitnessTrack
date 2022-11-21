@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_meals"
     android:orientation="vertical"
     tools:context=".CreateMealActivity">
 
@@ -23,7 +24,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_background"
+
         android:orientation="vertical"
         android:padding="@dimen/create_board_content_padding">
 
@@ -41,13 +42,6 @@
                 android:orientation="vertical"
                 android:padding="@dimen/card_view_layout_content_padding">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/iv_board_image"
-                    android:layout_width="@dimen/board_image_size"
-                    android:layout_height="@dimen/board_image_size"
-                    android:contentDescription="@string/image_contentDescription"
-                    android:src="@drawable/ic_black_color_back_24dp" />
-
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -62,6 +56,67 @@
                         android:textSize="@dimen/et_text_size" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/create_board_til_marginTop">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_board_name1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/meal_calories"
+                        android:inputType="text"
+                        android:textSize="@dimen/et_text_size" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/create_board_til_marginTop">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_board_name2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/meal_protein"
+                        android:inputType="text"
+                        android:textSize="@dimen/et_text_size" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/create_board_til_marginTop">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_board_name3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/meal_carbs"
+                        android:inputType="text"
+                        android:textSize="@dimen/et_text_size" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/create_board_til_marginTop">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_board_name4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/meal_fat"
+                        android:inputType="text"
+                        android:textSize="@dimen/et_text_size" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
 
                 <Button
                     android:id="@+id/btn_create"

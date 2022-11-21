@@ -32,5 +32,9 @@
     <string name="add_meal">Add Meal</string>
     <string name="exercise_name">Exercise Name</string>
     <string name="meal_name">Meal Name</string>
+    <string name="meal_calories">Meal Calories</string>
+    <string name="meal_protein">Meal Protein</string>
+    <string name="meal_carbs">Meal Carbs</string>
+    <string name="meal_fat">Meal Fat</string>
 
 </resources>

@@ -7,11 +7,11 @@
             android:title="@string/nav_my_profile" />
         <item
             android:id="@+id/nav_exercise"
-            android:icon="@drawable/ic_nav_sign_out"
+            android:icon="@drawable/ic_exercise"
             android:title="@string/nav_exercise" />
         <item
             android:id="@+id/nav_meal"
-            android:icon="@drawable/ic_nav_sign_out"
+            android:icon="@drawable/ic_meal"
             android:title="@string/nav_meal" />
         <item
             android:id="@+id/nav_sign_out"

@@ -40,29 +40,9 @@ class MealActivity : AppCompatActivity() {
 
         Firestore().loadUserData(this)
 
-        iv_meal_user_image.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED
-            ) {
-                showImageChooser()
-            } else {
 
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    READ_STORAGE_PERMISSION_CODE
-                )
-            }
-        }
-
-        btn_update_meal.setOnClickListener {
-            if (mSelectedImageFileUri != null) {
-                uploadUserImage()
-            }
-            else
-            {
-                updateUserMealData()
-            }
+        fab_create_board2.setOnClickListener{
+            startActivity(Intent(this, CreateMealActivity::class.java))
         }
     }
 
@@ -115,16 +95,7 @@ class MealActivity : AppCompatActivity() {
         ) {
             mSelectedImageFileUri = data.data
 
-            try {
-                Glide
-                    .with(this@MealActivity)
-                    .load(Uri.parse(mSelectedImageFileUri.toString()))
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_user_place_holder)
-                    .into(iv_meal_user_image)
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+
         }
     }
 
@@ -132,21 +103,7 @@ class MealActivity : AppCompatActivity() {
 
         mUserDetails = user
 
-
-        Glide
-            .with(this@MealActivity)
-            .load(user.image)
-            .centerCrop()
-            .placeholder(R.drawable.ic_user_place_holder)
-            .into(iv_meal_user_image)
-
-        et_name_meal.setText(user.name)
-        et_email_meal.setText(user.email)
-        if (user.mobile != 0L) {
-            et_mobile_meal.setText(user.mobile.toString())
-        }
     }
-
     private fun updateUserMealData() {
 
         val userHashMap = HashMap<String, Any>()
@@ -155,13 +112,7 @@ class MealActivity : AppCompatActivity() {
             userHashMap[Constants.IMAGE] = mMealImageURL
         }
 
-        if (et_name_meal.text.toString() != mUserDetails.name) {
-            userHashMap[Constants.NAME] = et_name_meal.text.toString()
-        }
 
-        if (et_mobile_meal.text.toString() != mUserDetails.mobile.toString()) {
-            userHashMap[Constants.MOBILE] = et_mobile_meal.text.toString().toLong()
-        }
 
         // Update the data in the database.
         Firestore().updateUserMealData(this@MealActivity, userHashMap)

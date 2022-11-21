@@ -1,6 +1,5 @@
 package com.fitnesstrack
 
-import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -11,18 +10,14 @@ import android.provider.MediaStore
 import android.util.Log
 import android.webkit.MimeTypeMap
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
-import com.bumptech.glide.Glide
 import com.fitnesstrack.firebase.Firestore
 import com.fitnesstrack.firebase.models.User
-import kotlinx.android.synthetic.main.activity_goal.*
-import androidx.core.content.ContextCompat
+import kotlinx.android.synthetic.main.activity_exercise.*
 import com.fitnesstrack.utils.Constants
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import java.io.IOException
 
-class GoalActivity : AppCompatActivity() {
+class ExerciseActivity : AppCompatActivity() {
 
     companion object {
         private const val READ_STORAGE_PERMISSION_CODE = 1
@@ -30,40 +25,18 @@ class GoalActivity : AppCompatActivity() {
     }
 
     private var mSelectedImageFileUri: Uri? = null
-    private var mGoalImageURL: String = ""
+    private var mExerciseImageURL: String = ""
     private lateinit var mUserDetails: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_goal)
+        setContentView(R.layout.activity_exercise)
         setupActionBar()
 
-        Firestore().loadUserData(this)
-
-        iv_goal_user_image.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED
-            ) {
-                showImageChooser()
-            } else {
-
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    READ_STORAGE_PERMISSION_CODE
-                )
-            }
+        fab_create_board1.setOnClickListener{
+            startActivity(Intent(this, CreateExerciseActivity::class.java))
         }
 
-        btn_update_goal.setOnClickListener {
-            if (mSelectedImageFileUri != null) {
-                uploadUserImage()
-            }
-            else
-            {
-                updateUserGoalData()
-            }
-        }
     }
 
     override fun onRequestPermissionsResult(
@@ -87,17 +60,19 @@ class GoalActivity : AppCompatActivity() {
 
     private fun setupActionBar() {
 
-        setSupportActionBar(toolbar_goal_activity)
+        setSupportActionBar(toolbar_exercise_activity)
 
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
-            actionBar.title = resources.getString(R.string.goal_title)
+            actionBar.title = resources.getString(R.string.exercise_title)
         }
 
-        toolbar_goal_activity.setNavigationOnClickListener { onBackPressed() }
+        toolbar_exercise_activity.setNavigationOnClickListener { onBackPressed() }
     }
+
+
 
     private fun showImageChooser() {
         val galleryIntent = Intent(
@@ -115,16 +90,7 @@ class GoalActivity : AppCompatActivity() {
         ) {
             mSelectedImageFileUri = data.data
 
-            try {
-                Glide
-                    .with(this@GoalActivity)
-                    .load(Uri.parse(mSelectedImageFileUri.toString()))
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_user_place_holder)
-                    .into(iv_goal_user_image)
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+
         }
     }
 
@@ -132,40 +98,62 @@ class GoalActivity : AppCompatActivity() {
 
         mUserDetails = user
 
-
-        Glide
-            .with(this@GoalActivity)
-            .load(user.image)
-            .centerCrop()
-            .placeholder(R.drawable.ic_user_place_holder)
-            .into(iv_goal_user_image)
-
-        et_name_goal.setText(user.name)
-        et_email_goal.setText(user.email)
-        if (user.mobile != 0L) {
-            et_mobile_goal.setText(user.mobile.toString())
-        }
     }
 
-    private fun updateUserGoalData() {
+    private fun updateUserExerciseData() {
 
         val userHashMap = HashMap<String, Any>()
 
-        if (mGoalImageURL.isNotEmpty() && mGoalImageURL != mUserDetails.image) {
-            userHashMap[Constants.IMAGE] = mGoalImageURL
+        if (mExerciseImageURL.isNotEmpty() && mExerciseImageURL != mUserDetails.image) {
+            userHashMap[Constants.IMAGE] = mExerciseImageURL
         }
 
-        if (et_name_goal.text.toString() != mUserDetails.name) {
-            userHashMap[Constants.NAME] = et_name_goal.text.toString()
-        }
-
-        if (et_mobile_goal.text.toString() != mUserDetails.mobile.toString()) {
-            userHashMap[Constants.MOBILE] = et_mobile_goal.text.toString().toLong()
-        }
 
         // Update the data in the database.
-        Firestore().updateUserGoalData(this@GoalActivity, userHashMap)
+        Firestore().updateUserExerciseData(this@ExerciseActivity, userHashMap)
     }
+
+
+
+
+
+
+//
+//
+//
+//    fun populateBoardsListToUI(boardsList: ArrayList<Board>) {
+//
+//        if (boardsList.size > 0) {
+//
+//            rv_boards_list.visibility = View.VISIBLE
+//            tv_no_boards_available.visibility = View.GONE
+//
+//            rv_boards_list.layoutManager = LinearLayoutManager(this@MainActivity)
+//            rv_boards_list.setHasFixedSize(true)
+//
+//            // Create an instance of BoardItemsAdapter and pass the boardList to it.
+//            val adapter = BoardItemsAdapter(this@MainActivity, boardsList)
+//            rv_boards_list.adapter = adapter // Attach the adapter to the recyclerView.
+//        } else {
+//            rv_boards_list.visibility = View.GONE
+//            tv_no_boards_available.visibility = View.VISIBLE
+//        }
+//    }
+//
+//
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private fun uploadUserImage() {
 
@@ -191,13 +179,13 @@ class GoalActivity : AppCompatActivity() {
                     taskSnapshot.metadata!!.reference!!.downloadUrl
                         .addOnSuccessListener { uri ->
                             Log.i("Downloadable Image URL", uri.toString())
-                            mGoalImageURL = uri.toString()
-                            updateUserGoalData()
+                            mExerciseImageURL = uri.toString()
+                            updateUserExerciseData()
                         }
                 }
                 .addOnFailureListener { exception ->
                     Toast.makeText(
-                        this@GoalActivity,
+                        this@ExerciseActivity,
                         exception.message,
                         Toast.LENGTH_LONG
                     ).show()
@@ -213,7 +201,7 @@ class GoalActivity : AppCompatActivity() {
             .getExtensionFromMimeType(contentResolver.getType(uri!!))
     }
 
-    fun goalUpdateSuccess()
+    fun exerciseUpdateSuccess()
     {
         finish()
     }

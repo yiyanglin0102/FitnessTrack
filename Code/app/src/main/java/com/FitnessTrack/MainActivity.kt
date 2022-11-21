@@ -50,8 +50,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this, MyProfileActivity::class.java))
             }
 
-            R.id.nav_goal -> {
-                startActivity(Intent(this, GoalActivity::class.java))
+            R.id.nav_exercise -> {
+                startActivity(Intent(this, ExerciseActivity::class.java))
             }
 
             R.id.nav_meal -> {

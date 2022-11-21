@@ -54,18 +54,18 @@ class Firestore {
             }
     }
 
-    fun updateUserGoalData(activity: GoalActivity, userHashMap: HashMap<String, Any>) {
+    fun updateUserExerciseData(activity: ExerciseActivity, userHashMap: HashMap<String, Any>) {
         mFirestore.collection(Constants.USERS) // Collection Name
             .document(getCurrentUserID()) // Document ID
             .update(userHashMap) // A hashmap of fields which are to be updated.
             .addOnSuccessListener {
                 // Profile data is updated successfully.
-                Log.e(activity.javaClass.simpleName, "Goal Data updated successfully!")
+                Log.e(activity.javaClass.simpleName, "Exercise Data updated successfully!")
 
-                Toast.makeText(activity, "Goal updated successfully!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Exercise updated successfully!", Toast.LENGTH_SHORT).show()
 
                 // Notify the success result.
-                activity.goalUpdateSuccess()
+                activity.exerciseUpdateSuccess()
             }
             .addOnFailureListener { e ->
 //                activity.hideProgressDialog()
@@ -74,7 +74,7 @@ class Firestore {
                     "Error while creating a board.",
                     e
                 )
-                Toast.makeText(activity, "Error update goal!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Error update Exercise!", Toast.LENGTH_SHORT).show()
 
             }
     }
@@ -121,7 +121,7 @@ class Firestore {
                     is MyProfileActivity -> {
                         activity.setUserDataUI(loggedInUser)
                     }
-                    is GoalActivity -> {
+                    is ExerciseActivity -> {
                         activity.setUserDataUI(loggedInUser)
                     }
                     is MealActivity -> {

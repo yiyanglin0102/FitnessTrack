@@ -65,7 +65,7 @@ class Firestore {
                 Toast.makeText(activity, "Exercise updated successfully!", Toast.LENGTH_SHORT).show()
 
                 // Notify the success result.
-                activity.exerciseUpdateSuccess()
+//                activity.exerciseUpdateSuccess()
             }
             .addOnFailureListener { e ->
 //                activity.hideProgressDialog()

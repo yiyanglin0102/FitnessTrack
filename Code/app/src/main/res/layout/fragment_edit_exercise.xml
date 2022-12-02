@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_meals"
     android:orientation="vertical"
-    tools:context=".CreateMealActivity">
+    android:background="@drawable/bg_exercise"
+    tools:context=".ExerciseEditFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -28,7 +28,6 @@
         android:orientation="vertical"
         android:padding="@dimen/create_board_content_padding">
 
-
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -37,7 +36,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="466dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="@dimen/card_view_layout_content_padding">
@@ -51,75 +50,58 @@
                         android:id="@+id/et_board_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/meal_name"
+                        android:hint="@string/exercise_name"
                         android:inputType="text"
                         android:textSize="@dimen/et_text_size" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
+                <Spinner
+                    android:layout_width="160dp"
+                    android:layout_height="148dp"
+                    android:autofillHints="Exercise Type"
+                    android:entries="@array/spinner_exercise_class"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="16dp"
+                    tools:layout_editor_absoluteY="7dp" />
+
+                <TextView
+                    android:id="@+id/exercise_type"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/create_board_til_marginTop">
+                    android:text="Choose your type of exercise"
+                    android:textSize="10sp"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="21dp"
+                    tools:layout_editor_absoluteY="34dp" />
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_board_name1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/meal_calories"
-                        android:inputType="text"
-                        android:textSize="@dimen/et_text_size" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/exercise_time"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/create_board_til_marginTop">
+                    android:text="Input your exercise time"
+                    android:textSize="10sp"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteX="24dp"
+                    tools:layout_editor_absoluteY="116dp" />
 
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_board_name2"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/meal_protein"
-                        android:inputType="text"
-                        android:textSize="@dimen/et_text_size" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/create_board_til_marginTop">
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_board_name3"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/meal_carbs"
-                        android:inputType="text"
-                        android:textSize="@dimen/et_text_size" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/create_board_til_marginTop">
-
-                    <androidx.appcompat.widget.AppCompatEditText
-                        android:id="@+id/et_board_name4"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/meal_fat"
-                        android:inputType="text"
-                        android:textSize="@dimen/et_text_size" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
+                <EditText
+                    android:layout_width="71dp"
+                    android:layout_height="26dp"
+                    android:background="@drawable/edit_text_bg"
+                    android:hint="time"
+                    android:paddingLeft="10sp"
+                    android:textSize="10sp"
+                    app:layout_constraintBottom_toBottomOf="@id/exercise_time"
+                    app:layout_constraintEnd_toEndOf="@id/exercise_time"
+                    app:layout_constraintHorizontal_bias="0.266"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/_dynamic"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:ignore="UnknownId" />
 
                 <Button
-                    android:id="@+id/btn_create"
+                    android:id="@+id/submit_exercise"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -129,9 +111,22 @@
                     android:gravity="center"
                     android:paddingTop="@dimen/btn_paddingTopBottom"
                     android:paddingBottom="@dimen/btn_paddingTopBottom"
-                    android:text="@string/add_meal"
+                    android:text="@string/add_exercise"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/btn_text_size" />
+
+
+
+                <Button
+                    android:id="@+id/cancel_exercise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="cancel"
+                    app:layout_constraintStart_toEndOf="@+id/submit_exercise"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/submit_exercise"
+                    app:layout_constraintBottom_toBottomOf="@+id/submit_exercise" />
+
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

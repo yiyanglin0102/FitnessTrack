@@ -36,14 +36,7 @@ class MealActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_meal)
-        setupActionBar()
-
         Firestore().loadUserData(this)
-
-
-        fab_create_board2.setOnClickListener{
-            startActivity(Intent(this, CreateMealActivity::class.java))
-        }
     }
 
     override fun onRequestPermissionsResult(
@@ -65,20 +58,6 @@ class MealActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupActionBar() {
-
-        setSupportActionBar(toolbar_meal_activity)
-
-        val actionBar = supportActionBar
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
-            actionBar.title = resources.getString(R.string.meal_title)
-        }
-
-        toolbar_meal_activity.setNavigationOnClickListener { onBackPressed() }
-    }
-
     private fun showImageChooser() {
         val galleryIntent = Intent(
             Intent.ACTION_PICK,
@@ -94,8 +73,6 @@ class MealActivity : AppCompatActivity() {
             && data!!.data != null
         ) {
             mSelectedImageFileUri = data.data
-
-
         }
     }
 

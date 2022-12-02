@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/exerciseDetailFragment">
+
+    <fragment
+        android:id="@+id/exerciseDetailFragment"
+        android:name="com.fitnesstrack.ExerciseDetailFragment"
+        android:label="fragment_detail_exercise"
+        tools:layout="@layout/fragment_detail_exercise" >
+        <action
+            android:id="@+id/action_exerciseDetailFragment_to_exerciseEditFragment"
+            app:destination="@id/exerciseEditFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/exerciseEditFragment"
+        android:name="com.fitnesstrack.ExerciseEditFragment"
+        android:label="fragment_edit_exercise"
+        tools:layout="@layout/fragment_edit_exercise" >
+        <action
+            android:id="@+id/action_exerciseEditFragment_pop"
+            app:popUpTo="@id/exerciseEditFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+</navigation>

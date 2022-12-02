@@ -129,9 +129,7 @@ class MyProfileActivity : AppCompatActivity() {
     }
 
     fun setUserDataUI(user: User) {
-
         mUserDetails = user
-
 
         Glide
             .with(this@MyProfileActivity)

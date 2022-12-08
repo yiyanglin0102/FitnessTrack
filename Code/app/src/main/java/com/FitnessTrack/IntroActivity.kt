@@ -23,6 +23,7 @@ class IntroActivity : AppCompatActivity() {
         tv_app_name_intro.typeface = typeface
 
         btn_sign_up_intro.setOnClickListener {
+
             startActivity(Intent(this@IntroActivity, SignUpActivity::class.java))
         }
         btn_sign_in_intro.setOnClickListener {

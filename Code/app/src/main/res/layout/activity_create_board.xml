@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--TODO (Step 4: Design the create board screen.)-->
+<!--START-->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg_exercise"
-    tools:context=".ExerciseEditFragment">
+    tools:context=".CreateBoardActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar_create_board_activity1"
+            android:id="@+id/toolbar_create_board_activity"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -24,7 +25,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:background="@drawable/ic_background"
         android:orientation="vertical"
         android:padding="@dimen/create_board_content_padding">
 
@@ -36,10 +37,17 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="466dp"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:padding="@dimen/card_view_layout_content_padding">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_board_image"
+                    android:layout_width="@dimen/board_image_size"
+                    android:layout_height="@dimen/board_image_size"
+                    android:contentDescription="@string/image_contentDescription"
+                    android:src="@drawable/ic_board_place_holder" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
@@ -50,58 +58,14 @@
                         android:id="@+id/et_board_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/exercise_name"
+                        android:hint="@string/board_name"
                         android:inputType="text"
                         android:textSize="@dimen/et_text_size" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <Spinner
-                    android:layout_width="160dp"
-                    android:layout_height="148dp"
-                    android:autofillHints="Exercise Type"
-                    android:entries="@array/spinner_exercise_class"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteX="16dp"
-                    tools:layout_editor_absoluteY="7dp" />
-
-                <TextView
-                    android:id="@+id/exercise_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Choose your type of exercise"
-                    android:textSize="10sp"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteX="21dp"
-                    tools:layout_editor_absoluteY="34dp" />
-
-                <TextView
-                    android:id="@+id/exercise_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Input your exercise time"
-                    android:textSize="10sp"
-                    tools:ignore="MissingConstraints"
-                    tools:layout_editor_absoluteX="24dp"
-                    tools:layout_editor_absoluteY="116dp" />
-
-                <EditText
-                    android:layout_width="71dp"
-                    android:layout_height="26dp"
-                    android:background="@drawable/edit_text_bg"
-                    android:hint="time"
-                    android:paddingLeft="10sp"
-                    android:textSize="10sp"
-                    app:layout_constraintBottom_toBottomOf="@id/exercise_time"
-                    app:layout_constraintEnd_toEndOf="@id/exercise_time"
-                    app:layout_constraintHorizontal_bias="0.266"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/_dynamic"
-                    app:layout_constraintVertical_bias="0.0"
-                    tools:ignore="UnknownId" />
-
                 <Button
-                    android:id="@+id/submit_exercise"
+                    android:id="@+id/btn_create"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -111,24 +75,12 @@
                     android:gravity="center"
                     android:paddingTop="@dimen/btn_paddingTopBottom"
                     android:paddingBottom="@dimen/btn_paddingTopBottom"
-                    android:text="@string/add_exercise"
+                    android:text="@string/create"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/btn_text_size" />
-
-
-
-                <Button
-                    android:id="@+id/cancel_exercise"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="cancel"
-                    app:layout_constraintStart_toEndOf="@+id/submit_exercise"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/submit_exercise"
-                    app:layout_constraintBottom_toBottomOf="@+id/submit_exercise" />
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 </LinearLayout>
+    <!--END-->

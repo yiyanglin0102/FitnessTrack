@@ -12,29 +12,13 @@
     <string name="email">Email</string>
     <string name="sign_in_description_text">Enter your name, email id and password, to register with us.</string>
     <string name="nav_my_profile">My Profile</string>
-    <string name="nav_meal">My Meal</string>
-    <string name="nav_exercise">My Exercise</string>
     <string name="nav_sign_out">Sign Out</string>
 
     <string name="mobile">Mobile</string>
     <string name="update">UPDATE</string>
     <string name="my_profile_title">My Profile</string>
-    <string name="exercise_title">My Exercise</string>
-    <string name="meal_title">My Meal</string>
-
-
-    <string name="mealName">MealName</string>
-    <string name="calories">Calories</string>
-    <string name="protein">Protein</string>
-    <string name="carbs">Carbs</string>
     <string name="create_board_title">Create Board</string>
-    <string name="add_exercise">Add Exercise</string>
-    <string name="add_meal">Add Meal</string>
-    <string name="exercise_name">Exercise Name</string>
-    <string name="meal_name">Meal Name</string>
-    <string name="meal_calories">Meal Calories</string>
-    <string name="meal_protein">Meal Protein</string>
-    <string name="meal_carbs">Meal Carbs</string>
-    <string name="meal_fat">Meal Fat</string>
+    <string name="create">CREATE</string>
+    <string name="board_name">Board Name</string>
 
 </resources>

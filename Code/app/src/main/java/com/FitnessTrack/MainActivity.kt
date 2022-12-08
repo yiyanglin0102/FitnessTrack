@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat
 import com.bumptech.glide.Glide
 import com.fitnesstrack.firebase.Firestore
 import com.fitnesstrack.firebase.models.User
+import com.fitnesstrack.utils.Constants
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
@@ -15,6 +16,9 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+
+    private lateinit var mUserName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +28,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         nav_view.setNavigationItemSelectedListener(this)
 
         Firestore().loadUserData(this)
+        fab_create_board.setOnClickListener {
+
+            val intent = Intent(this@MainActivity, CreateBoardActivity::class.java)
+            intent.putExtra(Constants.NAME, mUserName)
+            startActivity(intent)
+        }
     }
 
     private fun setupActionBar() {
@@ -50,14 +60,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 startActivity(Intent(this, MyProfileActivity::class.java))
             }
 
-            R.id.nav_exercise -> {
-                startActivity(Intent(this, ExerciseActivity::class.java))
-            }
-
-            R.id.nav_meal -> {
-                startActivity(Intent(this, MealActivity::class.java))
-            }
-
             R.id.nav_sign_out -> {
                 FirebaseAuth.getInstance().signOut()
 
@@ -72,6 +74,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     fun updateNavigationUserDetails(user: User) {
+
+        mUserName = user.name
+
         Glide
             .with(this@MainActivity)
             .load(user.image)

@@ -75,7 +75,7 @@ class Firestore {
             }
     }
 
-    fun loadUserData(activity: Activity) {
+    fun loadUserData(activity: Activity, isToReadBoardsList: Boolean = false) {
         mFirestore.collection(Constants.USERS).document(getCurrentUserID())
             .get()
             .addOnSuccessListener { document ->
@@ -86,7 +86,7 @@ class Firestore {
                         activity.signInSuccess(loggedInUser)
                     }
                     is MainActivity -> {
-                        activity.updateNavigationUserDetails(loggedInUser)
+                        activity.updateNavigationUserDetails(loggedInUser, isToReadBoardsList)
                     }
                     is MyProfileActivity -> {
                         activity.setUserDataUI(loggedInUser)
@@ -107,6 +107,37 @@ class Firestore {
                     "Error while getting loggedIn user details",
                     e
                 )
+            }
+    }
+
+    fun getBoardsList(activity: MainActivity) {
+
+        // The collection name for BOARDS
+        mFirestore.collection(Constants.BOARDS)
+            // A where array query as we want the list of the board in which the user is assigned. So here you can pass the current user id.
+            .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserID())
+            .get() // Will get the documents snapshots.
+            .addOnSuccessListener { document ->
+                // Here we get the list of boards in the form of documents.
+                Log.e(activity.javaClass.simpleName, document.documents.toString())
+                // Here we have created a new instance for Boards ArrayList.
+                val boardsList: ArrayList<Board> = ArrayList()
+
+                // A for loop as per the list of documents to convert them into Boards ArrayList.
+                for (i in document.documents) {
+
+                    val board = i.toObject(Board::class.java)!!
+                    board.documentId = i.id
+
+                    boardsList.add(board)
+                }
+
+                // Here pass the result to the base activity.
+                activity.populateBoardsListToUI(boardsList)
+            }
+            .addOnFailureListener { e ->
+
+                Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
             }
     }
 }

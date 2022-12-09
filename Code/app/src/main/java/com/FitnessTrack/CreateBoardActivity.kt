@@ -184,7 +184,7 @@ class CreateBoardActivity : AppCompatActivity() {
     }
 
     fun boardCreatedSuccessfully() {
-
+        setResult(Activity.RESULT_OK)
         finish()
     }
 }

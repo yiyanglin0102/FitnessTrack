@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.fitnesstrack.adapters.BoardItemsAdapter
 import com.fitnesstrack.firebase.Firestore
+import com.fitnesstrack.firebase.models.Board
 import com.fitnesstrack.firebase.models.User
 import com.fitnesstrack.utils.Constants
 import com.google.android.material.navigation.NavigationView

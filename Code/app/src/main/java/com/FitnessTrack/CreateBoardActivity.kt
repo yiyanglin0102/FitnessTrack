@@ -12,13 +12,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
-import com.fitnesstrack.R
 import com.fitnesstrack.firebase.Firestore
+import com.fitnesstrack.firebase.models.Board
 import com.fitnesstrack.utils.Constants
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_create_board.*
-import kotlinx.android.synthetic.main.activity_my_profile.*
 import java.io.IOException
 
 

@@ -1,8 +1,7 @@
-package com.fitnesstrack
+package com.fitnesstrack.firebase.models
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.fitnesstrack.models.Task
 
 data class Board(
     val name: String = "",

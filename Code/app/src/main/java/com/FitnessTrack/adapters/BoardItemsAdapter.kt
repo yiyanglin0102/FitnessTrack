@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.fitnesstrack.Board
+import com.fitnesstrack.firebase.models.Board
 import com.fitnesstrack.R
 import kotlinx.android.synthetic.main.item_board.view.*
 

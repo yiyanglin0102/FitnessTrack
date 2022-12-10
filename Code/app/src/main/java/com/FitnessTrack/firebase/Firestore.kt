@@ -4,6 +4,7 @@ import android.app.Activity
 import android.util.Log
 import android.widget.Toast
 import com.fitnesstrack.*
+import com.fitnesstrack.firebase.models.Board
 import com.fitnesstrack.firebase.models.User
 import com.fitnesstrack.utils.Constants
 import com.google.firebase.auth.FirebaseAuth

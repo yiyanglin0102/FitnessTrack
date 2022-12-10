@@ -2,10 +2,12 @@ package com.fitnesstrack
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.fitnesstrack.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.fitnesstrack.adapters.TaskListItemsAdapter
 import com.fitnesstrack.firebase.Firestore
+import com.fitnesstrack.firebase.models.Board
+import com.fitnesstrack.firebase.models.Task
 import com.fitnesstrack.utils.Constants
-import kotlinx.android.synthetic.main.activity_my_profile.*
 import kotlinx.android.synthetic.main.activity_task_list.*
 
 class TaskListActivity : AppCompatActivity() {
@@ -37,5 +39,14 @@ class TaskListActivity : AppCompatActivity() {
 
     fun boardDetails(board: Board) {
         setupActionBar(board.name)
+        val addTaskList = Task(resources.getString(R.string.add_list))
+        board.taskList.add(addTaskList)
+
+        rv_task_list.layoutManager =
+            LinearLayoutManager(this@TaskListActivity, LinearLayoutManager.HORIZONTAL, false)
+        rv_task_list.setHasFixedSize(true)
+
+        val adapter = TaskListItemsAdapter(this@TaskListActivity, board.taskList)
+        rv_task_list.adapter = adapter
     }
 }

@@ -1,4 +1,4 @@
-package com.fitnesstrack.models
+package com.fitnesstrack.firebase.models
 
 import android.os.Parcel
 import android.os.Parcelable

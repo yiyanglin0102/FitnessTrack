@@ -25,6 +25,20 @@ class Firestore {
             }
     }
 
+    fun getBoardDetails(activity: TaskListActivity, documentId: String) {
+        mFirestore.collection(Constants.BOARDS)
+            .document(documentId)
+            .get()
+            .addOnSuccessListener { document ->
+                Log.e(activity.javaClass.simpleName, document.toString())
+
+                // Send the result of board to the base activity.
+                activity.boardDetails(document.toObject(Board::class.java)!!)
+            }
+            .addOnFailureListener { e ->
+                Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
+            }
+    }
     fun getCurrentUserID(): String {
         return FirebaseAuth.getInstance().currentUser!!.uid
     }
@@ -118,9 +132,7 @@ class Firestore {
             .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserID())
             .get() // Will get the documents snapshots.
             .addOnSuccessListener { document ->
-                // Here we get the list of boards in the form of documents.
                 Log.e(activity.javaClass.simpleName, document.documents.toString())
-                // Here we have created a new instance for Boards ArrayList.
                 val boardsList: ArrayList<Board> = ArrayList()
 
                 // A for loop as per the list of documents to convert them into Boards ArrayList.
@@ -140,4 +152,6 @@ class Firestore {
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
             }
     }
+
+
 }

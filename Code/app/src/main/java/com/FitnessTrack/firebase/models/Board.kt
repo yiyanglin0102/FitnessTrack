@@ -1,5 +1,4 @@
 package com.fitnesstrack.firebase.models
-
 import android.os.Parcel
 import android.os.Parcelable
 

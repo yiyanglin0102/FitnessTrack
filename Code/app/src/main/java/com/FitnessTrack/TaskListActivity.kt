@@ -53,25 +53,19 @@ class TaskListActivity : AppCompatActivity() {
         val adapter = TaskListItemsAdapter(this@TaskListActivity, board.taskList)
         rv_task_list.adapter = adapter
     }
+
     fun createTaskList(taskListName: String) {
 
         Log.e("Task List Name", taskListName)
-
-        // Create and Assign the task details
         val task = Task(taskListName, Firestore().getCurrentUserID())
 
-        mBoardDetails.taskList.add(0, task) // Add task to the first position of ArrayList
-        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1) // Remove the last position as we have added the item manually for adding the TaskList.
-
-        // Show the progress dialog.
+        mBoardDetails.taskList.add(0, task)
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
 
         Firestore().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
     }
+
     fun addUpdateTaskListSuccess() {
-
-
-        // Here get the updated board details.
-        // Show the progress dialog.
         Firestore().getBoardDetails(this@TaskListActivity, mBoardDetails.documentId)
     }
 }

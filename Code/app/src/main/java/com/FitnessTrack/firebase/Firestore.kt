@@ -32,13 +32,19 @@ class Firestore {
             .addOnSuccessListener { document ->
                 Log.e(activity.javaClass.simpleName, document.toString())
 
+
+                val board = document.toObject(Board::class.java)!!
+                board.documentId = document.id
+
                 // Send the result of board to the base activity.
-                activity.boardDetails(document.toObject(Board::class.java)!!)
+                activity.boardDetails(board)
+                // END
             }
             .addOnFailureListener { e ->
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
             }
     }
+
 
     fun getCurrentUserID(): String {
         return FirebaseAuth.getInstance().currentUser!!.uid

@@ -1,6 +1,7 @@
 package com.fitnesstrack
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fitnesstrack.adapters.TaskListItemsAdapter
@@ -11,6 +12,8 @@ import com.fitnesstrack.utils.Constants
 import kotlinx.android.synthetic.main.activity_task_list.*
 
 class TaskListActivity : AppCompatActivity() {
+
+    private lateinit var mBoardDetails: Board
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +26,7 @@ class TaskListActivity : AppCompatActivity() {
     }
 
 
-    private fun setupActionBar(title: String) {
+    private fun setupActionBar() {
 
         setSupportActionBar(toolbar_task_list_activity)
 
@@ -31,14 +34,15 @@ class TaskListActivity : AppCompatActivity() {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
-            actionBar.title = title
+            actionBar.title = mBoardDetails.name
         }
 
         toolbar_task_list_activity.setNavigationOnClickListener { onBackPressed() }
     }
 
     fun boardDetails(board: Board) {
-        setupActionBar(board.name)
+        mBoardDetails = board
+        setupActionBar()
         val addTaskList = Task(resources.getString(R.string.add_list))
         board.taskList.add(addTaskList)
 
@@ -48,5 +52,26 @@ class TaskListActivity : AppCompatActivity() {
 
         val adapter = TaskListItemsAdapter(this@TaskListActivity, board.taskList)
         rv_task_list.adapter = adapter
+    }
+    fun createTaskList(taskListName: String) {
+
+        Log.e("Task List Name", taskListName)
+
+        // Create and Assign the task details
+        val task = Task(taskListName, Firestore().getCurrentUserID())
+
+        mBoardDetails.taskList.add(0, task) // Add task to the first position of ArrayList
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1) // Remove the last position as we have added the item manually for adding the TaskList.
+
+        // Show the progress dialog.
+
+        Firestore().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
+    }
+    fun addUpdateTaskListSuccess() {
+
+
+        // Here get the updated board details.
+        // Show the progress dialog.
+        Firestore().getBoardDetails(this@TaskListActivity, mBoardDetails.documentId)
     }
 }

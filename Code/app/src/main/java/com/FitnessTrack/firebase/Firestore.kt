@@ -15,7 +15,6 @@ import com.google.firebase.firestore.SetOptions
 class Firestore {
     private val mFirestore = FirebaseFirestore.getInstance()
 
-
     fun registerUser(activity: SignUpActivity, userInfo: User) {
         mFirestore.collection(Constants.USERS).document(getCurrentUserID())
             .set(userInfo, SetOptions.merge())
@@ -40,6 +39,7 @@ class Firestore {
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
             }
     }
+
     fun getCurrentUserID(): String {
         return FirebaseAuth.getInstance().currentUser!!.uid
     }
@@ -90,6 +90,24 @@ class Firestore {
             }
     }
 
+    fun addUpdateTaskList(activity: TaskListActivity, board: Board) {
+
+        val taskListHashMap = HashMap<String, Any>()
+        taskListHashMap[Constants.TASK_LIST] = board.taskList
+
+        mFirestore.collection(Constants.BOARDS)
+            .document(board.documentId)
+            .update(taskListHashMap)
+            .addOnSuccessListener {
+                Log.e(activity.javaClass.simpleName, "TaskList updated successfully.")
+
+                activity.addUpdateTaskListSuccess()
+            }
+            .addOnFailureListener { e ->
+                Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
+            }
+    }
+
     fun loadUserData(activity: Activity, isToReadBoardsList: Boolean = false) {
         mFirestore.collection(Constants.USERS).document(getCurrentUserID())
             .get()
@@ -127,16 +145,13 @@ class Firestore {
 
     fun getBoardsList(activity: MainActivity) {
 
-        // The collection name for BOARDS
         mFirestore.collection(Constants.BOARDS)
-            // A where array query as we want the list of the board in which the user is assigned. So here you can pass the current user id.
             .whereArrayContains(Constants.ASSIGNED_TO, getCurrentUserID())
-            .get() // Will get the documents snapshots.
+            .get()
             .addOnSuccessListener { document ->
                 Log.e(activity.javaClass.simpleName, document.documents.toString())
                 val boardsList: ArrayList<Board> = ArrayList()
 
-                // A for loop as per the list of documents to convert them into Boards ArrayList.
                 for (i in document.documents) {
 
                     val board = i.toObject(Board::class.java)!!
@@ -145,7 +160,6 @@ class Firestore {
                     boardsList.add(board)
                 }
 
-                // Here pass the result to the base activity.
                 activity.populateBoardsListToUI(boardsList)
             }
             .addOnFailureListener { e ->

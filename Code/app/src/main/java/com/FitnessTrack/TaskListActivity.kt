@@ -68,4 +68,22 @@ class TaskListActivity : AppCompatActivity() {
     fun addUpdateTaskListSuccess() {
         Firestore().getBoardDetails(this@TaskListActivity, mBoardDetails.documentId)
     }
+
+    fun updateTaskList(position: Int, listName: String, model: Task) {
+
+        val task = Task(listName, model.createdBy)
+
+        mBoardDetails.taskList[position] = task
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
+
+        Firestore().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
+    }
+    fun deleteTaskList(position: Int){
+
+        mBoardDetails.taskList.removeAt(position)
+
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
+
+        Firestore().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
+    }
 }

@@ -3,24 +3,19 @@ package com.fitnesstrack.firebase.models
 import android.os.Parcel
 import android.os.Parcelable
 
-
 data class User(
-
     val id: String = "",
     val name: String = "",
     val email: String = "",
     val image: String = "",
-    val mobile: Long = 0,
-    val fcmToken: String = ""
-
+    val mobile: Long = 0
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readLong(),
-        parcel.readString()!!
+        parcel.readLong()
     ) {
     }
 
@@ -32,7 +27,6 @@ data class User(
         writeString(email)
         writeString(image)
         writeLong(mobile)
-        writeString(fcmToken)
     }
 
     companion object CREATOR : Parcelable.Creator<User> {

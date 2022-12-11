@@ -63,6 +63,7 @@ open class BoardItemsAdapter(
 
                 if (onClickListener != null) {
                     onClickListener!!.onClick(position, model)
+
                 }
             }
         }

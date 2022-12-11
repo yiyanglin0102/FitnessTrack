@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.fitnesstrack.R
-import com.fitnesstrack.TaskListActivity
+import com.fitnesstrack.activities.TaskListActivity
 import com.fitnesstrack.firebase.models.Task
 import kotlinx.android.synthetic.main.item_task.view.*
 
@@ -26,7 +26,7 @@ open class TaskListItemsAdapter(
 
         val view = LayoutInflater.from(context).inflate(R.layout.item_task, parent, false)
         val layoutParams = LinearLayout.LayoutParams(
-            (parent.width * 0.7).toInt(),
+            (parent.width * 1).toInt(),
             LinearLayout.LayoutParams.WRAP_CONTENT
         )
         layoutParams.setMargins((15.toDp()).toPx(), 0, (40.toDp()).toPx(), 0)
@@ -35,7 +35,10 @@ open class TaskListItemsAdapter(
         return MyViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, @SuppressLint("RecyclerView") position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        @SuppressLint("RecyclerView") position: Int
+    ) {
         val model = list[position]
 
         if (holder is MyViewHolder) {
@@ -50,14 +53,15 @@ open class TaskListItemsAdapter(
             holder.itemView.tv_task_list_title.text = model.title
 
             holder.itemView.tv_add_task_list.setOnClickListener {
-
                 holder.itemView.tv_add_task_list.visibility = View.GONE
                 holder.itemView.cv_add_task_list_name.visibility = View.VISIBLE
             }
+
             holder.itemView.ib_close_list_name.setOnClickListener {
                 holder.itemView.tv_add_task_list.visibility = View.VISIBLE
                 holder.itemView.cv_add_task_list_name.visibility = View.GONE
             }
+
             holder.itemView.ib_done_list_name.setOnClickListener {
                 val listName = holder.itemView.et_task_list_name.text.toString()
 
@@ -66,12 +70,13 @@ open class TaskListItemsAdapter(
                         context.createTaskList(listName)
                     }
                 } else {
-                    Toast.makeText(context, "Please Enter List Name.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Please Enter CATEGORY ITEM.", Toast.LENGTH_SHORT).show()
                 }
             }
+
             holder.itemView.ib_edit_list_name.setOnClickListener {
 
-                holder.itemView.et_edit_task_list_name.setText(model.title) // Set the existing title
+                holder.itemView.et_edit_task_list_name.setText(model.title)
                 holder.itemView.ll_title_view.visibility = View.GONE
                 holder.itemView.cv_edit_task_list_name.visibility = View.VISIBLE
             }
@@ -113,7 +118,7 @@ open class TaskListItemsAdapter(
                             context.addCardToTaskList(position, cardName)
                         }
                     } else {
-                        Toast.makeText(context, "Please Enter Card Detail.", Toast.LENGTH_SHORT)
+                        Toast.makeText(context, "Please Enter NEW ITEM.", Toast.LENGTH_SHORT)
                             .show()
                     }
                 }

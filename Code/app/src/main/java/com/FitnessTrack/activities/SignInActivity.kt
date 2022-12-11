@@ -1,4 +1,4 @@
-package com.fitnesstrack
+package com.fitnesstrack.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,9 +6,9 @@ import android.util.Log
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.fitnesstrack.R
 import com.fitnesstrack.firebase.models.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_in.*
@@ -35,9 +35,6 @@ class SignInActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
-        if (currentUser != null) {
-            reload();
-        }
     }
 
     private fun signInWithEmail(email: String, password: String) {
@@ -67,13 +64,4 @@ class SignInActivity : AppCompatActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
-
-    private fun reload() {
-
-    }
-
-    private fun updateUI(user: FirebaseUser?) {
-
-    }
-
 }

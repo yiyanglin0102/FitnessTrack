@@ -1,10 +1,11 @@
-package com.fitnesstrack
+package com.fitnesstrack.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.fitnesstrack.R
 import com.fitnesstrack.firebase.Firestore
 import com.fitnesstrack.firebase.models.User
 import com.google.firebase.auth.FirebaseAuth
@@ -14,6 +15,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_up.*
 
 class SignUpActivity : AppCompatActivity() {
+
     private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,9 +36,6 @@ class SignUpActivity : AppCompatActivity() {
     public override fun onStart() {
         super.onStart()
         val currentUser = auth.currentUser
-        if (currentUser != null) {
-            reload();
-        }
     }
 
     private fun createAccount(email: String, name: String, password: String) {
@@ -56,7 +55,6 @@ class SignUpActivity : AppCompatActivity() {
                         this@SignUpActivity,
                         "Registration Failed", Toast.LENGTH_SHORT
                     ).show()
-
                 }
             }
     }
@@ -76,13 +74,8 @@ class SignUpActivity : AppCompatActivity() {
         createAccount(email, name, password)
     }
 
-
     private fun updateUI(user: FirebaseUser?) {
         startActivity(Intent(this, MainActivity::class.java))
-    }
-
-    private fun reload() {
-
     }
 
     companion object {

@@ -1,4 +1,4 @@
-package com.fitnesstrack
+package com.fitnesstrack.activities
 
 import android.content.Intent
 import android.graphics.Typeface
@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.fitnesstrack.R
 import kotlinx.android.synthetic.main.activity_first.*
 
 class FirstActivity : AppCompatActivity() {

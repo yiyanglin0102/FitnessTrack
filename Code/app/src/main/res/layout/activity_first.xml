@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_splash_background"
+    android:background="@drawable/bg_first"
     android:gravity="center"
-    tools:context=".FirstActivity">
+    tools:context=".activities.FirstActivity">
 
     <TextView
         android:id="@+id/tv_app_name"

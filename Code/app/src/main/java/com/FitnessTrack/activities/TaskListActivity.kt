@@ -1,4 +1,4 @@
-package com.fitnesstrack
+package com.fitnesstrack.activities
 
 import android.app.Activity
 import android.content.Intent
@@ -6,29 +6,28 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fitnesstrack.R
 import com.fitnesstrack.adapters.TaskListItemsAdapter
 import com.fitnesstrack.firebase.Firestore
 import com.fitnesstrack.firebase.models.Board
 import com.fitnesstrack.firebase.models.Card
 import com.fitnesstrack.firebase.models.Task
-import com.fitnesstrack.utils.Constants
+import com.fitnesstrack.utilities.Constants
 import kotlinx.android.synthetic.main.activity_task_list.*
 
 class TaskListActivity : AppCompatActivity() {
 
-    private lateinit var mBoardDetails: Board
-    private lateinit var mBoardDocumentId: String
+    private lateinit var boardDetails: Board
+    private lateinit var boardDocumentId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_list)
-        var boardDocumentId = ""
         if (intent.hasExtra(Constants.DOCUMENT_ID)) {
             boardDocumentId = intent.getStringExtra(Constants.DOCUMENT_ID)!!
         }
         Firestore().getBoardDetails(this@TaskListActivity, boardDocumentId)
     }
-
 
     private fun setupActionBar() {
 
@@ -38,14 +37,14 @@ class TaskListActivity : AppCompatActivity() {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
-            actionBar.title = mBoardDetails.name
+            actionBar.title = boardDetails.name
         }
 
         toolbar_task_list_activity.setNavigationOnClickListener { onBackPressed() }
     }
 
     fun boardDetails(board: Board) {
-        mBoardDetails = board
+        boardDetails = board
         setupActionBar()
         val addTaskList = Task(resources.getString(R.string.add_list))
         board.taskList.add(addTaskList)
@@ -59,60 +58,43 @@ class TaskListActivity : AppCompatActivity() {
     }
 
     fun createTaskList(taskListName: String) {
-
-        Log.e("Task List Name", taskListName)
         val task = Task(taskListName, Firestore().getCurrentUserID())
-
-        mBoardDetails.taskList.add(0, task)
-        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
-
-        Firestore().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
+        boardDetails.taskList.add(0, task)
+        boardDetails.taskList.removeAt(boardDetails.taskList.size - 1)
+        Firestore().addUpdateTaskList(this@TaskListActivity, boardDetails)
     }
 
     fun addUpdateTaskListSuccess() {
-        Firestore().getBoardDetails(this@TaskListActivity, mBoardDetails.documentId)
+        Firestore().getBoardDetails(this@TaskListActivity, boardDetails.documentId)
     }
 
     fun updateTaskList(position: Int, listName: String, model: Task) {
-
         val task = Task(listName, model.createdBy)
-
-        mBoardDetails.taskList[position] = task
-        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
-
-        Firestore().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
+        boardDetails.taskList[position] = task
+        boardDetails.taskList.removeAt(boardDetails.taskList.size - 1)
+        Firestore().addUpdateTaskList(this@TaskListActivity, boardDetails)
     }
 
     fun deleteTaskList(position: Int) {
-
-        mBoardDetails.taskList.removeAt(position)
-
-        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
-
-        Firestore().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
+        boardDetails.taskList.removeAt(position)
+        boardDetails.taskList.removeAt(boardDetails.taskList.size - 1)
+        Firestore().addUpdateTaskList(this@TaskListActivity, boardDetails)
     }
 
     fun addCardToTaskList(position: Int, cardName: String) {
-
-        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
-
+        boardDetails.taskList.removeAt(boardDetails.taskList.size - 1)
         val cardAssignedUsersList: ArrayList<String> = ArrayList()
         cardAssignedUsersList.add(Firestore().getCurrentUserID())
-
         val card = Card(cardName, Firestore().getCurrentUserID(), cardAssignedUsersList)
-
-        val cardsList = mBoardDetails.taskList[position].cards
+        val cardsList = boardDetails.taskList[position].cards
         cardsList.add(card)
-
         val task = Task(
-            mBoardDetails.taskList[position].title,
-            mBoardDetails.taskList[position].createdBy,
+            boardDetails.taskList[position].title,
+            boardDetails.taskList[position].createdBy,
             cardsList
         )
-
-        mBoardDetails.taskList[position] = task
-
-        Firestore().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
+        boardDetails.taskList[position] = task
+        Firestore().addUpdateTaskList(this@TaskListActivity, boardDetails)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -120,27 +102,23 @@ class TaskListActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK
             && (requestCode == MEMBERS_REQUEST_CODE || requestCode == CARD_DETAILS_REQUEST_CODE)
         ) {
-            Firestore().getBoardDetails(this@TaskListActivity, mBoardDocumentId)
-        }
-        else {
+            Firestore().getBoardDetails(this@TaskListActivity, boardDocumentId)
+        } else {
             Log.e("Cancelled", "Cancelled")
         }
     }
 
     fun cardDetails(taskListPosition: Int, cardPosition: Int) {
         val intent = Intent(this@TaskListActivity, CardDetailsActivity::class.java)
-        intent.putExtra(Constants.BOARD_DETAIL, mBoardDetails)
+        intent.putExtra(Constants.BOARD_DETAIL, boardDetails)
         intent.putExtra(Constants.TASK_LIST_ITEM_POSITION, taskListPosition)
         intent.putExtra(Constants.CARD_LIST_ITEM_POSITION, cardPosition)
         startActivityForResult(intent, CARD_DETAILS_REQUEST_CODE)
-    }
-
-    fun tails(taskListPosition: Int, cardPosition: Int) {
-        startActivity(Intent(this@TaskListActivity, CardDetailsActivity::class.java))
     }
 
     companion object {
         const val MEMBERS_REQUEST_CODE: Int = 13
         const val CARD_DETAILS_REQUEST_CODE: Int = 14
     }
+
 }

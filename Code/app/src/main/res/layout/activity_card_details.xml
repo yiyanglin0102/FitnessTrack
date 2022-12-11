@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".CardDetailsActivity">
+    tools:context=".activities.CardDetailsActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -88,28 +88,12 @@
                     android:text="@string/select_color"
                     android:textColor="@color/primary_text_color" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/card_details_members_label_marginTop"
-                    android:text="@string/select_members"
-                    android:textColor="@color/secondary_text_color"
-                    android:textSize="@dimen/card_details_label_text_size" />
-
-                <TextView
-                    android:id="@+id/tv_select_members"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/card_details_value_marginTop"
-                    android:padding="@dimen/card_details_value_padding"
-                    android:text="@string/select_members"
-                    android:textColor="@color/primary_text_color" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/card_details_members_label_marginTop"
-                    android:text="@string/due_date"
+                    android:text="@string/select_made_date"
                     android:textColor="@color/secondary_text_color"
                     android:textSize="@dimen/card_details_label_text_size" />
 
@@ -120,6 +104,23 @@
                     android:layout_marginTop="@dimen/card_details_value_marginTop"
                     android:padding="@dimen/card_details_value_padding"
                     android:text="@string/select_due_date"
+                    android:textColor="@color/primary_text_color" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/card_details_members_label_marginTop"
+                    android:text="@string/calories"
+                    android:textColor="@color/secondary_text_color"
+                    android:textSize="@dimen/card_details_label_text_size" />
+
+                <EditText
+                    android:id="@+id/tv_input_calories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/card_details_value_marginTop"
+                    android:padding="@dimen/card_details_value_padding"
+                    android:hint="@string/input_calories"
                     android:textColor="@color/primary_text_color" />
 
                 <Button

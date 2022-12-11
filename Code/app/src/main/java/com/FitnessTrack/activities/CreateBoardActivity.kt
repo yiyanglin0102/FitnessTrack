@@ -1,4 +1,4 @@
-package com.fitnesstrack
+package com.fitnesstrack.activities
 
 import android.Manifest
 import android.app.Activity
@@ -12,31 +12,29 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.fitnesstrack.R
 import com.fitnesstrack.firebase.Firestore
 import com.fitnesstrack.firebase.models.Board
-import com.fitnesstrack.utils.Constants
+import com.fitnesstrack.utilities.Constants
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_create_board.*
 import java.io.IOException
 
-
 class CreateBoardActivity : AppCompatActivity() {
 
-    private var mSelectedImageFileUri: Uri? = null
-    private lateinit var mUserName: String
-    private var mBoardImageURL: String = ""
+    private var selectedImageFileUri: Uri? = null
+    private lateinit var userName: String
+    private var boardImageURL: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_board)
-
         setupActionBar()
 
         if (intent.hasExtra(Constants.NAME)) {
-            mUserName = intent.getStringExtra(Constants.NAME)!!
+            userName = intent.getStringExtra(Constants.NAME)!!
         }
-
 
         iv_board_image.setOnClickListener { view ->
 
@@ -45,9 +43,6 @@ class CreateBoardActivity : AppCompatActivity() {
             ) {
                 Constants.showImageChooser(this@CreateBoardActivity)
             } else {
-                /*Requests permissions to be granted to this application. These permissions
-                 must be requested in your manifest, they should not be granted to your app,
-                 and they should have protection level*/
                 ActivityCompat.requestPermissions(
                     this,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
@@ -57,64 +52,42 @@ class CreateBoardActivity : AppCompatActivity() {
         }
 
         btn_create.setOnClickListener {
-
-            // Here if the image is not selected then update the other details of user.
-            if (mSelectedImageFileUri != null) {
-
+            if (selectedImageFileUri != null) {
                 uploadBoardImage()
             } else {
-
-
-                // Call a function to update create a board.
-                createBoard()
+                  createBoard()
             }
         }
     }
 
     private fun createBoard() {
-
-        //  A list is created to add the assigned members.
-        //  This can be modified later on as of now the user itself will be the member of the board.
         val assignedUsersArrayList: ArrayList<String> = ArrayList()
         assignedUsersArrayList.add(Firestore().getCurrentUserID()) // adding the current user id.
-
-        // Creating the instance of the Board and adding the values as per parameters.
         val board = Board(
             et_board_name.text.toString(),
-            mBoardImageURL,
-            mUserName,
+            boardImageURL,
+            userName,
             assignedUsersArrayList
         )
-
         Firestore().createBoard(this@CreateBoardActivity, board)
     }
 
     private fun uploadBoardImage() {
-
-        //getting the storage reference
         val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
             "BOARD_IMAGE" + System.currentTimeMillis() + "."
-                    + Constants.getFileExtension(this@CreateBoardActivity, mSelectedImageFileUri)
+                    + Constants.getFileExtension(this@CreateBoardActivity, selectedImageFileUri)
         )
-
-        //adding the file to reference
-        sRef.putFile(mSelectedImageFileUri!!)
+        sRef.putFile(selectedImageFileUri!!)
             .addOnSuccessListener { taskSnapshot ->
-                // The image upload is success
                 Log.e(
                     "Firebase Image URL",
                     taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
                 )
 
-                // Get the downloadable url from the task snapshot
                 taskSnapshot.metadata!!.reference!!.downloadUrl
                     .addOnSuccessListener { uri ->
                         Log.e("Downloadable Image URL", uri.toString())
-
-                        // assign the image url to the variable.
-                        mBoardImageURL = uri.toString()
-
-                        // Call a function to create the board.
+                        boardImageURL = uri.toString()
                         createBoard()
                     }
             }
@@ -124,7 +97,6 @@ class CreateBoardActivity : AppCompatActivity() {
                     exception.message,
                     Toast.LENGTH_LONG
                 ).show()
-
             }
     }
 
@@ -154,12 +126,12 @@ class CreateBoardActivity : AppCompatActivity() {
             && requestCode == Constants.PICK_IMAGE_REQUEST_CODE
             && data!!.data != null
         ) {
-            mSelectedImageFileUri = data.data
+            selectedImageFileUri = data.data
 
             try {
                 Glide
                     .with(this)
-                    .load(Uri.parse(mSelectedImageFileUri.toString()))
+                    .load(Uri.parse(selectedImageFileUri.toString()))
                     .centerCrop()
                     .placeholder(R.drawable.ic_board_place_holder)
                     .into(iv_board_image)
@@ -170,15 +142,12 @@ class CreateBoardActivity : AppCompatActivity() {
     }
 
     private fun setupActionBar() {
-
         setSupportActionBar(toolbar_create_board_activity)
-
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
-//            actionBar.setHomeAsUpIndicator(R.drawable.ic_white_color_back_24dp)
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
         }
-
         toolbar_create_board_activity.setNavigationOnClickListener { onBackPressed() }
     }
 
@@ -187,4 +156,3 @@ class CreateBoardActivity : AppCompatActivity() {
         finish()
     }
 }
-// END

@@ -3,10 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/intro_background"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context=".IntroActivity">
+    tools:context=".activities.IntroActivity">
 
     <TextView
         android:id="@+id/tv_app_name_intro"
@@ -19,11 +18,11 @@
         android:textStyle="bold" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="399dp"
+        android:layout_height="185dp"
         android:layout_marginTop="@dimen/intro_screen_image_marginTop"
-        android:contentDescription="@string/image_contentDescription"
-        android:src="@drawable/ic_task_image" />
+        android:background="@drawable/bg_login"
+        android:contentDescription="@string/image_contentDescription" />
 
     <TextView
         android:layout_width="wrap_content"

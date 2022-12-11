@@ -1,4 +1,4 @@
-package com.fitnesstrack
+package com.fitnesstrack.activities
 
 import android.Manifest
 import android.app.Activity
@@ -7,9 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.util.Log
-import android.webkit.MimeTypeMap
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import com.bumptech.glide.Glide
@@ -17,16 +15,17 @@ import com.fitnesstrack.firebase.Firestore
 import com.fitnesstrack.firebase.models.User
 import kotlinx.android.synthetic.main.activity_my_profile.*
 import androidx.core.content.ContextCompat
-import com.fitnesstrack.utils.Constants
+import com.fitnesstrack.R
+import com.fitnesstrack.utilities.Constants
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.IOException
 
 class MyProfileActivity : AppCompatActivity() {
 
-    private var mSelectedImageFileUri: Uri? = null
-    private var mProfileImageURL: String = ""
-    private lateinit var mUserDetails: User
+    private var selectedImageFileUri: Uri? = null
+    private var profileImageURL: String = ""
+    private lateinit var userDetails: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +50,7 @@ class MyProfileActivity : AppCompatActivity() {
         }
 
         btn_update.setOnClickListener {
-            if (mSelectedImageFileUri != null) {
+            if (selectedImageFileUri != null) {
                 uploadUserImage()
             }
             else
@@ -62,16 +61,13 @@ class MyProfileActivity : AppCompatActivity() {
     }
 
     private fun setupActionBar() {
-
         setSupportActionBar(toolbar_my_profile_activity)
-
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeAsUpIndicator(R.drawable.ic_black_color_back_24dp)
             actionBar.title = resources.getString(R.string.my_profile_title)
         }
-
         toolbar_my_profile_activity.setNavigationOnClickListener { onBackPressed() }
     }
 
@@ -99,12 +95,12 @@ class MyProfileActivity : AppCompatActivity() {
             && requestCode == Constants.PICK_IMAGE_REQUEST_CODE
             && data!!.data != null
         ) {
-            mSelectedImageFileUri = data.data
+            selectedImageFileUri = data.data
 
             try {
                 Glide
                     .with(this@MyProfileActivity)
-                    .load(Uri.parse(mSelectedImageFileUri.toString()))
+                    .load(Uri.parse(selectedImageFileUri.toString()))
                     .centerCrop()
                     .placeholder(R.drawable.ic_user_place_holder)
                     .into(iv_profile_user_image)
@@ -115,10 +111,7 @@ class MyProfileActivity : AppCompatActivity() {
     }
 
     fun setUserDataUI(user: User) {
-
-        mUserDetails = user
-
-
+        userDetails = user
         Glide
             .with(this@MyProfileActivity)
             .load(user.image)
@@ -137,47 +130,38 @@ class MyProfileActivity : AppCompatActivity() {
 
         val userHashMap = HashMap<String, Any>()
 
-        if (mProfileImageURL.isNotEmpty() && mProfileImageURL != mUserDetails.image) {
-            userHashMap[Constants.IMAGE] = mProfileImageURL
+        if (profileImageURL.isNotEmpty() && profileImageURL != userDetails.image) {
+            userHashMap[Constants.IMAGE] = profileImageURL
         }
 
-        if (et_name.text.toString() != mUserDetails.name) {
+        if (et_name.text.toString() != userDetails.name) {
             userHashMap[Constants.NAME] = et_name.text.toString()
         }
 
-        if (et_mobile.text.toString() != mUserDetails.mobile.toString()) {
-            userHashMap[Constants.MOBILE] = et_mobile.text.toString().toLong()
+        if (et_mobile.text.toString() != userDetails.mobile.toString()) {
+            userHashMap[Constants.MOBILE] = et_mobile.text.toString().toLong() //
         }
-
-        // Update the data in the database.
         Firestore().updateUserProfileData(this@MyProfileActivity, userHashMap)
     }
 
     private fun uploadUserImage() {
 
-        if (mSelectedImageFileUri != null) {
-
-            //getting the storage reference
+        if (selectedImageFileUri != null) {
             val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
                 "USER_IMAGE" + System.currentTimeMillis() + "." + Constants.getFileExtension(this@MyProfileActivity,
-                    mSelectedImageFileUri
+                    selectedImageFileUri
                 )
             )
-
-            //adding the file to reference
-            sRef.putFile(mSelectedImageFileUri!!)
+            sRef.putFile(selectedImageFileUri!!)
                 .addOnSuccessListener { taskSnapshot ->
-                    // The image upload is success
                     Log.e(
                         "Firebase Image URL",
                         taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
                     )
-
-                    // Get the downloadable url from the task snapshot
                     taskSnapshot.metadata!!.reference!!.downloadUrl
                         .addOnSuccessListener { uri ->
                             Log.i("Downloadable Image URL", uri.toString())
-                            mProfileImageURL = uri.toString()
+                            profileImageURL = uri.toString()
                             updateUserProfileData()
                         }
                 }
@@ -187,7 +171,6 @@ class MyProfileActivity : AppCompatActivity() {
                         exception.message,
                         Toast.LENGTH_LONG
                     ).show()
-
                 }
         }
     }

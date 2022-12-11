@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fitnesstrack.adapters.TaskListItemsAdapter
 import com.fitnesstrack.firebase.Firestore
 import com.fitnesstrack.firebase.models.Board
+import com.fitnesstrack.firebase.models.Card
 import com.fitnesstrack.firebase.models.Task
 import com.fitnesstrack.utils.Constants
 import kotlinx.android.synthetic.main.activity_task_list.*
@@ -78,11 +79,36 @@ class TaskListActivity : AppCompatActivity() {
 
         Firestore().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
     }
-    fun deleteTaskList(position: Int){
+
+    fun deleteTaskList(position: Int) {
 
         mBoardDetails.taskList.removeAt(position)
 
         mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
+
+        Firestore().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
+    }
+
+    fun addCardToTaskList(position: Int, cardName: String) {
+
+        // Remove the last item
+        mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
+
+        val cardAssignedUsersList: ArrayList<String> = ArrayList()
+        cardAssignedUsersList.add(Firestore().getCurrentUserID())
+
+        val card = Card(cardName, Firestore().getCurrentUserID(), cardAssignedUsersList)
+
+        val cardsList = mBoardDetails.taskList[position].cards
+        cardsList.add(card)
+
+        val task = Task(
+            mBoardDetails.taskList[position].title,
+            mBoardDetails.taskList[position].createdBy,
+            cardsList
+        )
+
+        mBoardDetails.taskList[position] = task
 
         Firestore().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
     }

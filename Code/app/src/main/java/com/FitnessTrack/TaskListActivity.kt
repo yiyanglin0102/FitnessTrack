@@ -1,5 +1,6 @@
 package com.fitnesstrack
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_task_list.*
 class TaskListActivity : AppCompatActivity() {
 
     private lateinit var mBoardDetails: Board
+    private lateinit var mBoardDocumentId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,5 +113,17 @@ class TaskListActivity : AppCompatActivity() {
         mBoardDetails.taskList[position] = task
 
         Firestore().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
+    }
+
+    fun cardDetails(taskListPosition: Int, cardPosition: Int) {
+        val intent = Intent(this@TaskListActivity, CardDetailsActivity::class.java)
+        intent.putExtra(Constants.BOARD_DETAIL, mBoardDetails)
+        intent.putExtra(Constants.TASK_LIST_ITEM_POSITION, taskListPosition)
+        intent.putExtra(Constants.CARD_LIST_ITEM_POSITION, cardPosition)
+        startActivity(intent)
+    }
+
+    fun tails(taskListPosition: Int, cardPosition: Int) {
+        startActivity(Intent(this@TaskListActivity, CardDetailsActivity::class.java))
     }
 }

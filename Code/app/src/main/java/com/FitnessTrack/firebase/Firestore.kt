@@ -5,7 +5,6 @@ import android.util.Log
 import android.widget.Toast
 import com.fitnesstrack.*
 import com.fitnesstrack.firebase.models.Board
-import com.fitnesstrack.firebase.models.Card
 import com.fitnesstrack.firebase.models.User
 import com.fitnesstrack.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -32,9 +31,14 @@ class Firestore {
             .get()
             .addOnSuccessListener { document ->
                 Log.e(activity.javaClass.simpleName, document.toString())
+
+
                 val board = document.toObject(Board::class.java)!!
                 board.documentId = document.id
+
+                // Send the result of board to the base activity.
                 activity.boardDetails(board)
+                // END
             }
             .addOnFailureListener { e ->
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
@@ -92,7 +96,7 @@ class Firestore {
             }
     }
 
-    fun addUpdateTaskList(activity: Activity, board: Board) {
+    fun addUpdateTaskList(activity: TaskListActivity, board: Board) {
 
         val taskListHashMap = HashMap<String, Any>()
         taskListHashMap[Constants.TASK_LIST] = board.taskList
@@ -103,11 +107,7 @@ class Firestore {
             .addOnSuccessListener {
                 Log.e(activity.javaClass.simpleName, "TaskList updated successfully.")
 
-                if (activity is TaskListActivity) {
-                    activity.addUpdateTaskListSuccess()
-                } else if (activity is CardDetailsActivity) {
-                    activity.addUpdateTaskListSuccess()
-                }
+                activity.addUpdateTaskListSuccess()
             }
             .addOnFailureListener { e ->
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
@@ -173,7 +173,6 @@ class Firestore {
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
             }
     }
-
 
 
 }

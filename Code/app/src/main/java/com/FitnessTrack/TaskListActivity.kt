@@ -24,9 +24,9 @@ class TaskListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_task_list)
         var boardDocumentId = ""
         if (intent.hasExtra(Constants.DOCUMENT_ID)) {
-            mBoardDocumentId = intent.getStringExtra(Constants.DOCUMENT_ID)!!
+            boardDocumentId = intent.getStringExtra(Constants.DOCUMENT_ID)!!
         }
-        Firestore().getBoardDetails(this@TaskListActivity, mBoardDocumentId)
+        Firestore().getBoardDetails(this@TaskListActivity, boardDocumentId)
     }
 
 

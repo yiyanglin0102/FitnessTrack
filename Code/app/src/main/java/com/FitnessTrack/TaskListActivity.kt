@@ -1,5 +1,6 @@
 package com.fitnesstrack
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -23,9 +24,9 @@ class TaskListActivity : AppCompatActivity() {
         setContentView(R.layout.activity_task_list)
         var boardDocumentId = ""
         if (intent.hasExtra(Constants.DOCUMENT_ID)) {
-            boardDocumentId = intent.getStringExtra(Constants.DOCUMENT_ID)!!
+            mBoardDocumentId = intent.getStringExtra(Constants.DOCUMENT_ID)!!
         }
-        Firestore().getBoardDetails(this@TaskListActivity, boardDocumentId)
+        Firestore().getBoardDetails(this@TaskListActivity, mBoardDocumentId)
     }
 
 
@@ -93,7 +94,6 @@ class TaskListActivity : AppCompatActivity() {
 
     fun addCardToTaskList(position: Int, cardName: String) {
 
-        // Remove the last item
         mBoardDetails.taskList.removeAt(mBoardDetails.taskList.size - 1)
 
         val cardAssignedUsersList: ArrayList<String> = ArrayList()
@@ -115,15 +115,32 @@ class TaskListActivity : AppCompatActivity() {
         Firestore().addUpdateTaskList(this@TaskListActivity, mBoardDetails)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK
+            && (requestCode == MEMBERS_REQUEST_CODE || requestCode == CARD_DETAILS_REQUEST_CODE)
+        ) {
+            Firestore().getBoardDetails(this@TaskListActivity, mBoardDocumentId)
+        }
+        else {
+            Log.e("Cancelled", "Cancelled")
+        }
+    }
+
     fun cardDetails(taskListPosition: Int, cardPosition: Int) {
         val intent = Intent(this@TaskListActivity, CardDetailsActivity::class.java)
         intent.putExtra(Constants.BOARD_DETAIL, mBoardDetails)
         intent.putExtra(Constants.TASK_LIST_ITEM_POSITION, taskListPosition)
         intent.putExtra(Constants.CARD_LIST_ITEM_POSITION, cardPosition)
-        startActivity(intent)
+        startActivityForResult(intent, CARD_DETAILS_REQUEST_CODE)
     }
 
     fun tails(taskListPosition: Int, cardPosition: Int) {
         startActivity(Intent(this@TaskListActivity, CardDetailsActivity::class.java))
+    }
+
+    companion object {
+        const val MEMBERS_REQUEST_CODE: Int = 13
+        const val CARD_DETAILS_REQUEST_CODE: Int = 14
     }
 }

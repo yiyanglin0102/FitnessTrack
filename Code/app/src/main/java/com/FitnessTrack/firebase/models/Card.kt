@@ -9,8 +9,7 @@ data class Card(
     val assignedTo: ArrayList<String> = ArrayList(),
     val labelColor: String = "",
     val dueDate: Long = 0,
-    val calories: String = ""
-
+    var calories: String = ""
 ) : Parcelable {
     constructor(source: Parcel) : this(
         source.readString()!!,

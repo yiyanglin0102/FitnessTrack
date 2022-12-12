@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.fitnesstrack.R
 import kotlinx.android.synthetic.main.activity_first.*
 
-class FirstActivity : AppCompatActivity() {
+class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +25,8 @@ class FirstActivity : AppCompatActivity() {
         tv_app_name.typeface = typeface
 
         Handler().postDelayed({
-            startActivity(Intent(this@FirstActivity, IntroActivity::class.java))
+            startActivity(Intent(this@SplashActivity, IntroActivity::class.java))
             finish()
         }, 2500)
     }
-
 }

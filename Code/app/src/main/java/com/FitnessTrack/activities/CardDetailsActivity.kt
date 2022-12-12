@@ -16,7 +16,6 @@ import com.fitnesstrack.firebase.models.Card
 import com.fitnesstrack.firebase.models.Task
 import com.fitnesstrack.utilities.Constants
 import kotlinx.android.synthetic.main.activity_card_details.*
-import kotlinx.android.synthetic.main.item_task.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -55,9 +54,15 @@ class CardDetailsActivity : AppCompatActivity() {
         if (inputCalories.isNotEmpty()) {
             setCalories()
         }
+        else {
+            boardDetails.taskList[taskListPosition].cards[cardPosition].calories = tv_input_calories.text.toString()
+
+            Firestore().addUpdateTaskList(this@CardDetailsActivity, boardDetails)
+        }
 
         selectedDueDateMilliSeconds =
             boardDetails.taskList[taskListPosition].cards[cardPosition].dueDate
+
         if (selectedDueDateMilliSeconds > 0) {
             val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
             val selectedDate = simpleDateFormat.format(Date(selectedDueDateMilliSeconds))
@@ -71,6 +76,7 @@ class CardDetailsActivity : AppCompatActivity() {
         tv_select_label_color.setOnClickListener {
             labelColorsListDialog()
         }
+
     }
 
 
@@ -102,8 +108,8 @@ class CardDetailsActivity : AppCompatActivity() {
 
     private fun setCalories() {
         tv_input_calories.setText(boardDetails.taskList[taskListPosition].cards[cardPosition].calories)
-//        tv_input_calories.text(inputCalories)
-//        tv_task_list_title. = model.title
+        tv_input_calories.setSelection(tv_input_calories.text.toString().length)
+
     }
 
     fun addUpdateCardDetailsSuccess() {
@@ -166,7 +172,8 @@ class CardDetailsActivity : AppCompatActivity() {
             boardDetails.taskList[taskListPosition].cards[cardPosition].createdBy,
             boardDetails.taskList[taskListPosition].cards[cardPosition].assignedTo,
             selectedColor,
-            selectedDueDateMilliSeconds
+            selectedDueDateMilliSeconds,
+            inputCalories
         )
         val taskList: ArrayList<Task> = boardDetails.taskList
         taskList.removeAt(taskList.size - 1)

@@ -23,7 +23,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.FirstActivity"
+            android:name=".activities.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">

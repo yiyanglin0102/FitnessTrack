@@ -46,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <androidx.appcompat.widget.AppCompatEditText
+                    <EditText
                         android:id="@+id/et_name_card_details"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -114,13 +114,14 @@
                     android:textColor="@color/secondary_text_color"
                     android:textSize="@dimen/card_details_label_text_size" />
 
-                <EditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/tv_input_calories"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/card_details_value_marginTop"
                     android:padding="@dimen/card_details_value_padding"
                     android:hint="@string/input_calories"
+                    tools:text="Test"
                     android:textColor="@color/primary_text_color" />
 
                 <Button

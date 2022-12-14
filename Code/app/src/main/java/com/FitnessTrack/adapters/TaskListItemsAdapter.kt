@@ -21,7 +21,6 @@ open class TaskListItemsAdapter(
     private var list: ArrayList<Task>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         val view = LayoutInflater.from(context).inflate(R.layout.item_task, parent, false)
@@ -146,7 +145,7 @@ open class TaskListItemsAdapter(
     private fun alertDialogForDeleteList(position: Int, title: String) {
         val builder = AlertDialog.Builder(context)
         //set title for alert dialog
-        builder.setTitle("Alert")
+        builder.setTitle("Delete")
         //set message for alert dialog
         builder.setMessage("Are you sure you want to delete $title.")
         builder.setIcon(android.R.drawable.ic_dialog_alert)

@@ -55,7 +55,6 @@ open class CardListItemsAdapter(
         return list.size
     }
 
-
     fun setOnClickListener(onClickListener: OnClickListener) {
         this.onClickListener = onClickListener
     }

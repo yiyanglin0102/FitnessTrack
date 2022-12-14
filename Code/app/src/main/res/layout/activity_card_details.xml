@@ -106,23 +106,23 @@
                     android:text="@string/select_due_date"
                     android:textColor="@color/primary_text_color" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/card_details_members_label_marginTop"
-                    android:text="@string/calories"
-                    android:textColor="@color/secondary_text_color"
-                    android:textSize="@dimen/card_details_label_text_size" />
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="@dimen/card_details_members_label_marginTop"-->
+<!--                    android:text="@string/calories"-->
+<!--                    android:textColor="@color/secondary_text_color"-->
+<!--                    android:textSize="@dimen/card_details_label_text_size" />-->
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/tv_input_calories"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/card_details_value_marginTop"
-                    android:padding="@dimen/card_details_value_padding"
-                    android:hint="@string/input_calories"
-                    tools:text="Test"
-                    android:textColor="@color/primary_text_color" />
+<!--                <androidx.appcompat.widget.AppCompatEditText-->
+<!--                    android:id="@+id/tv_input_calories"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="@dimen/card_details_value_marginTop"-->
+<!--                    android:padding="@dimen/card_details_value_padding"-->
+<!--                    android:hint="@string/input_calories"-->
+<!--                    tools:text="Test"-->
+<!--                    android:textColor="@color/primary_text_color" />-->
 
                 <Button
                     android:id="@+id/btn_update_card_details"

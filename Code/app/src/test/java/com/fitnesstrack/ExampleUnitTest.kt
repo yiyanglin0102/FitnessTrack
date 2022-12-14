@@ -1,4 +1,4 @@
-package edu.bu.fitnesstrack
+package com.fitnesstrack
 
 import org.junit.Test
 

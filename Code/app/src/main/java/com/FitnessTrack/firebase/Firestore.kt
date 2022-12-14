@@ -82,7 +82,6 @@ class Firestore {
     }
 
     fun addUpdateTaskList(activity: Activity, board: Board) {
-
         val taskListHashMap = HashMap<String, Any>()
         taskListHashMap[Constants.TASK_LIST] = board.taskList
 
@@ -90,15 +89,13 @@ class Firestore {
             .document(board.documentId)
             .update(taskListHashMap)
             .addOnSuccessListener {
-                Log.e(activity.javaClass.simpleName, "TaskList updated successfully.")
 
                 if (activity is TaskListActivity) {
                     activity.addUpdateTaskListSuccess()
                 } else if (activity is CardDetailsActivity) {
                     activity.addUpdateCardDetailsSuccess()
                 }
-            }
-            .addOnFailureListener { e ->
+            }.addOnFailureListener { e ->
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
             }
     }
@@ -150,5 +147,4 @@ class Firestore {
                 Log.e(activity.javaClass.simpleName, "Error while creating a board.", e)
             }
     }
-
 }

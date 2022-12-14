@@ -98,7 +98,7 @@ class TaskListActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK
-            && (requestCode == MEMBERS_REQUEST_CODE || requestCode == CARD_DETAILS_REQUEST_CODE)
+            && requestCode == CARD_DETAILS_REQUEST_CODE
         ) {
             Firestore().getBoardDetails(this@TaskListActivity, boardDocumentId)
         } else {
@@ -115,7 +115,6 @@ class TaskListActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val MEMBERS_REQUEST_CODE: Int = 13
         const val CARD_DETAILS_REQUEST_CODE: Int = 14
     }
 

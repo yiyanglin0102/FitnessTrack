@@ -27,7 +27,6 @@ class CardDetailsActivity : AppCompatActivity() {
     private var cardPosition: Int = -1
     private var selectedColor: String = ""
     private var selectedDueDateMilliSeconds: Long = 0
-    private var inputCalories: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,16 +49,6 @@ class CardDetailsActivity : AppCompatActivity() {
             setColor()
         }
 
-        inputCalories = boardDetails.taskList[taskListPosition].cards[cardPosition].calories
-        if (inputCalories.isNotEmpty()) {
-            setCalories()
-        }
-        else {
-            boardDetails.taskList[taskListPosition].cards[cardPosition].calories = tv_input_calories.text.toString()
-
-            Firestore().addUpdateTaskList(this@CardDetailsActivity, boardDetails)
-        }
-
         selectedDueDateMilliSeconds =
             boardDetails.taskList[taskListPosition].cards[cardPosition].dueDate
 
@@ -78,7 +67,6 @@ class CardDetailsActivity : AppCompatActivity() {
         }
 
     }
-
 
     private fun colorsList(): ArrayList<String> {
 
@@ -104,12 +92,6 @@ class CardDetailsActivity : AppCompatActivity() {
     private fun setColor() {
         tv_select_label_color.text = ""
         tv_select_label_color.setBackgroundColor(Color.parseColor(selectedColor))
-    }
-
-    private fun setCalories() {
-        tv_input_calories.setText(boardDetails.taskList[taskListPosition].cards[cardPosition].calories)
-        tv_input_calories.setSelection(tv_input_calories.text.toString().length)
-
     }
 
     fun addUpdateCardDetailsSuccess() {
@@ -172,8 +154,7 @@ class CardDetailsActivity : AppCompatActivity() {
             boardDetails.taskList[taskListPosition].cards[cardPosition].createdBy,
             boardDetails.taskList[taskListPosition].cards[cardPosition].assignedTo,
             selectedColor,
-            selectedDueDateMilliSeconds,
-            inputCalories
+            selectedDueDateMilliSeconds
         )
         val taskList: ArrayList<Task> = boardDetails.taskList
         taskList.removeAt(taskList.size - 1)

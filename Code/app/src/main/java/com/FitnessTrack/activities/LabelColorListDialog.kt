@@ -21,9 +21,7 @@ abstract class LabelColorListDialog(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState ?: Bundle())
-
         val view = LayoutInflater.from(context).inflate(R.layout.dialog_list, null)
-
         setContentView(view)
         setCanceledOnTouchOutside(true)
         setCancelable(true)
